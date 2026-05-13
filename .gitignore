@@ -1,0 +1,32 @@
+## [ VISUAL STUDIO ]
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## [ ENTITY FRAMEWORK & DB ]
+# Chặn các file database local để tránh ghi đè dữ liệu của team
+*.mdf
+*.ldf
+*.sdf
+# Chặn diagram cá nhân của EDMX
+*.edmx.diagram
+
+## [ CONFIGURATION & SECURITY ]
+# Chặn App.config vì nó chứa tên server riêng: LAPTOP-6GOIAQS9
+App.config
+
+# KHÔNG chặn file example để team có mẫu mà copy
+!App.config.example
+
+## [ PACKAGES ]
+# Chặn thư mục NuGet nặng, team sẽ dùng 'Restore NuGet Packages'
+packages/
+!packages/repositories.config
+
+## [ OS FILES ]
+Thumbs.db
+desktop.ini
