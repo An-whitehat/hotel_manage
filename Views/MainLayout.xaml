@@ -1,0 +1,23 @@
+﻿<Window x:Class="QLKS.Views.MainLayout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QLKS.Views"
+        mc:Ignorable="d"
+        Title="MainLayout" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="162*"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="201*"/>
+            <ColumnDefinition Width="599*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" Grid.RowSpan="3"/>
+        <TextBlock HorizontalAlignment="Left" Margin="38,0,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center"/>
+
+    </Grid>
+</Window>
