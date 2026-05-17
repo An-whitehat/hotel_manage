@@ -211,7 +211,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\MainLayoutViewModel.cs" />
+    <Compile Include="ViewModels\RoomViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="Views\MainLayout.xaml.cs">
       <DependentUpon>MainLayout.xaml</DependentUpon>
