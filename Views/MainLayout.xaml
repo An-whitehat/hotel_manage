@@ -17,7 +17,18 @@
             <ColumnDefinition Width="599*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1" Grid.RowSpan="3"/>
-        <TextBlock HorizontalAlignment="Left" Margin="38,0,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Happy Hotel" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1">
+            <Button Content="Trang chủ" Height="36"/>
+            <Button Content="Quản lý phòng" Height="36"/>
+            <Button Content="Sơ đồ phòng" Height="36"/>
+            <Button Content="Đặt phòng" Height="37"/>
+            <Button Content="Khách hàng" Height="36"/>
+            <Button Content="Hóa đơn" Height="36"/>
+            <Button Content="Thống kê doanh thu" Height="36"/>
+            <Button Content="Báo cáo" Height="36"/>
+            <Button Content="Nhân viên" Height="36"/>
+        </StackPanel>
 
     </Grid>
 </Window>
