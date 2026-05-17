@@ -1,38 +1,25 @@
-﻿using System;
+﻿using QLKS.Commands;
+using QLKS.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-<<<<<<< HEAD
 using System.Windows;
 using System.Windows.Input;
-using QLKS.Models;
-using QLKS.Commands;
-=======
-using System.Windows.Input;
-using QLKS.Models;
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
 
 namespace QLKS.ViewModels
 {
     public class RoomViewModel : BaseViewModel
     {
-<<<<<<< HEAD
         public ObservableCollection<Phong> ListPhong { get; set; }
         public ObservableCollection<LoaiPhong> ListLoaiPhong { get; set; } // Dùng đổ vào ComboBox khi tạo phòng
-=======
-        private HotelManagementEntities _db = new HotelManagementEntities();
-
-        public ObservableCollection<Phong> ListPhong { get; set; }
-        public ObservableCollection<LoaiPhong> ListLoaiPhongCombo { get; set; } // Dùng cho ComboBox chọn loại phòng
-        public ObservableCollection<string> ListTrangThai { get; set; } // Trống, Đang thuê, Đang dọn, Bảo trì
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
 
         private Phong _selectedPhong;
         public Phong SelectedPhong
         {
             get => _selectedPhong;
-<<<<<<< HEAD
             set
             {
                 _selectedPhong = value;
@@ -68,14 +55,15 @@ namespace QLKS.ViewModels
         public RoomViewModel()
         {
             LoadData();
-            AddRoomCmd = new RelayCommand<object>((p) => AddRoom());
-            EditRoomCmd = new RelayCommand<object>((p) => EditRoom(), (p) => SelectedPhong != null);
-            DeleteRoomCmd = new RelayCommand<object>((p) => DeleteRoom(), (p) => SelectedPhong != null);
+            // Đã chuyển về RelayCommand chuẩn không dùng Generic như cấu hình dự án của m
+            AddRoomCmd = new RelayCommand((p) => AddRoom());
+            EditRoomCmd = new RelayCommand((p) => EditRoom(), (p) => SelectedPhong != null);
+            DeleteRoomCmd = new RelayCommand((p) => DeleteRoom(), (p) => SelectedPhong != null);
         }
 
         private void LoadData()
         {
-            using (var db = new HotelDbContext())
+            using (var db = new HotelManagementEntities())
             {
                 // Sử dụng Include để tải kèm thông tin Loại Phòng (Eager Loading)
                 ListPhong = new ObservableCollection<Phong>(db.Phongs.Include("LoaiPhong").ToList());
@@ -87,7 +75,7 @@ namespace QLKS.ViewModels
         {
             if (string.IsNullOrEmpty(SoPhong) || SelectedLoaiPhong == null) return;
 
-            using (var db = new HotelDbContext())
+            using (var db = new HotelManagementEntities())
             {
                 if (db.Phongs.Any(x => x.SoPhong == SoPhong))
                 {
@@ -105,7 +93,7 @@ namespace QLKS.ViewModels
 
         private void EditRoom()
         {
-            using (var db = new HotelDbContext())
+            using (var db = new HotelManagementEntities())
             {
                 var p = db.Phongs.Find(SelectedPhong.MaPhong);
                 if (p != null)
@@ -122,7 +110,7 @@ namespace QLKS.ViewModels
 
         private void DeleteRoom()
         {
-            using (var db = new HotelDbContext())
+            using (var db = new HotelManagementEntities())
             {
                 var p = db.Phongs.Find(SelectedPhong.MaPhong);
                 if (p != null)
@@ -143,50 +131,3 @@ namespace QLKS.ViewModels
         private void ClearForm() { SoPhong = ""; TrangThai = "Trống"; GhiChu = ""; SelectedLoaiPhong = null; SelectedPhong = null; }
     }
 }
-}
-=======
-            set { _selectedPhong = value; OnPropertyChanged(); }
-        }
-
-        public ICommand AddPhongCmd { get; set; }
-        public ICommand EditPhongCmd { get; set; }
-        public ICommand DeletePhongCmd { get; set; }
-
-        public RoomViewModel()
-        {
-            ListPhong = new ObservableCollection<Phong>(_db.Phongs.ToList());
-            ListLoaiPhongCombo = new ObservableCollection<LoaiPhong>(_db.LoaiPhongs.ToList());
-            ListTrangThai = new ObservableCollection<string> { "Trống", "Đang thuê", "Đang dọn", "Bảo trì" };
-
-            AddPhongCmd = new RelayCommand<object>(p => true, p => {
-                if (!ListLoaiPhongCombo.Any()) return;
-
-                var pNew = new Phong
-                {
-                    SoPhong = "Pxxx",
-                    MaLoaiPhong = ListLoaiPhongCombo.First().MaLoaiPhong,
-                    TrangThai = "Trống",
-                    NgayTao = System.DateTime.Now
-                };
-                _db.Phongs.Add(pNew);
-                _db.SaveChanges();
-                ListPhong.Add(pNew);
-            });
-
-            EditPhongCmd = new RelayCommand<object>(p => SelectedPhong != null, p => {
-                _db.SaveChanges();
-                MessageBox.Show("Cập nhật thông tin phòng thành công!");
-            });
-
-            DeletePhongCmd = new RelayCommand<object>(p => SelectedPhong != null, p => {
-                if (MessageBox.Show("Xóa phòng này?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    _db.Phongs.Remove(SelectedPhong);
-                    _db.SaveChanges();
-                    ListPhong.Remove(SelectedPhong);
-                }
-            });
-        }
-    }
-}
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74

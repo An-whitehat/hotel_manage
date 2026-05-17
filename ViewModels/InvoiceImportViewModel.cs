@@ -1,14 +1,18 @@
-﻿using System;
+﻿using QLKS.Commands;
+using QLKS.Models; // Sửa từ HotelManagement.Models thành QLKS.Models
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel; // Đã thêm để fix lỗi ObservableCollection
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows; // Đã thêm để sử dụng được MessageBox
 using System.Windows.Input;
-using HotelManagement.Models;
 
-namespace QLKS.ViewModels
+namespace QLKS.ViewModels // Sửa từ HotelManagement thành QLKS
 {
-    public class InvoiceImportViewModel
+    // Đã thêm kế thừa BaseViewModel để gọi được hàm OnPropertyChanged()
+    public class InvoiceImportViewModel : BaseViewModel
     {
         private HotelManagementEntities _db = new HotelManagementEntities();
 
@@ -50,15 +54,14 @@ namespace QLKS.ViewModels
             CurrentDetails = new ObservableCollection<ChiTietHoaDon>();
             ResetInvoice();
 
-            // Khởi tạo hóa đơn mới độc lập
-            CreateNewInvoiceCmd = new RelayCommand<object>(p => true, p => {
+            // Đã đồng bộ loại bỏ <object> của RelayCommand giống m và Bảo
+            CreateNewInvoiceCmd = new RelayCommand(p => {
                 ResetInvoice();
             });
 
             // Thêm một mặt hàng vào danh sách tạm thời
-            AddItemToInvoiceCmd = new RelayCommand<object>(p => SelectedDichVu != null && QuantityToImport > 0, p => {
-                decimal itemPrice = SelectedDichVu.GiaDichVu; // Có thể tùy biến thành giá nhập riêng nếu cần
-                decimal totalItem = itemPrice * QuantityToImport;
+            AddItemToInvoiceCmd = new RelayCommand(p => {
+                decimal itemPrice = SelectedDichVu.GiaDichVu != null ? Convert.ToDecimal(SelectedDichVu.GiaDichVu) : 0m; decimal totalItem = itemPrice * QuantityToImport;
 
                 var existingItem = CurrentDetails.FirstOrDefault(d => d.MaDichVu == SelectedDichVu.MaDichVu);
                 if (existingItem != null)
@@ -78,10 +81,10 @@ namespace QLKS.ViewModels
                     });
                 }
                 UpdateInvoiceTotal();
-            });
+            }, p => SelectedDichVu != null && QuantityToImport > 0);
 
             // Lưu toàn bộ hóa đơn xuống Database
-            SaveInvoiceCmd = new RelayCommand<object>(p => CurrentDetails.Count > 0, p => {
+            SaveInvoiceCmd = new RelayCommand(p => {
                 try
                 {
                     // LƯU Ý: Gán MaNV tĩnh ở đây. Thực tế phải lấy từ thông tin đăng nhập của Phúc (Ngày 1)
@@ -104,7 +107,7 @@ namespace QLKS.ViewModels
                 {
                     MessageBox.Show("Lỗi hệ thống: " + ex.Message);
                 }
-            });
+            }, p => CurrentDetails.Count > 0);
         }
 
         private void ResetInvoice()

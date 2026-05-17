@@ -23,6 +23,7 @@ namespace QLKS
         public MainWindow()
         {
             InitializeComponent();
+            //this.Content = new QLKS.Views.KhachHangView();
         }
     }
 }

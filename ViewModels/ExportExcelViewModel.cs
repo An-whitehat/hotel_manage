@@ -1,12 +1,14 @@
-﻿using QLKS.Models;
+﻿using QLKS.Commands;
+using QLKS.Models;
 using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
+using System.Data; // ĐÃ THÊM: Để nhận diện cấu trúc DataTable
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using QLKS.Helpers; // Nếu file ExcelExporter nằm trong thư mục Helpers
 namespace QLKS.ViewModels
 {
     public class ExportExcelViewModel : BaseViewModel
@@ -17,8 +19,8 @@ namespace QLKS.ViewModels
 
         public ExportExcelViewModel()
         {
-            // Command liên kết với nút bấm Xuất Báo Cáo trên giao diện
-            ExportRevenueReportCmd = new RelayCommand<object>(p => true, p => {
+            // ĐÃ SỬA: Loại bỏ <object> của RelayCommand để đồng bộ với project
+            ExportRevenueReportCmd = new RelayCommand(p => {
 
                 // Chuyển đổi Linq Entity sang DataTable để đổ vào Helper Excel
                 DataTable dt = new DataTable();
@@ -36,7 +38,7 @@ namespace QLKS.ViewModels
 
                 // Gọi helper xuất file
                 ExcelExporter.ExportToExcel(dt, "Báo cáo tổng kết hóa đơn khách sạn", "DanhSachHoaDon");
-            });
+            }, p => true);
         }
     }
 }
