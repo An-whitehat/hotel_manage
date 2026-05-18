@@ -28,15 +28,12 @@ namespace QLKS.ViewModels
             {
                 _selectedKhachHang = value;
 
-                // 1. Ép giao diện phải vẽ lại dữ liệu lên các ô TextBox ngay lập tức
                 OnPropertyChanged(nameof(SelectedKhachHang));
 
-                // 2. Ép các nút Cập nhật và Xóa phải quét lại điều kiện để sáng lên
                 System.Windows.Input.CommandManager.InvalidateRequerySuggested();
             }
         }
-
-        public ICommand AddCommand { get; set; }
+        ICommand AddCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand ClearCommand { get; set; }

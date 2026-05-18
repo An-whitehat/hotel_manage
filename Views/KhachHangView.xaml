@@ -62,9 +62,9 @@
 
         <Border Grid.Row="2" Background="#27293D" CornerRadius="8" Padding="10">
             <DataGrid ItemsSource="{Binding DanhSachKhachHang}" 
-                      SelectedItem="{Binding SelectedKhachHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                      AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
-                      Background="#27293D" Foreground="White" RowBackground="#27293D" BorderThickness="0" RowHeight="35" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#2B3553">
+          SelectedItem="{Binding SelectedKhachHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+          AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+          Background="#27293D" Foreground="White" RowBackground="#27293D" BorderThickness="0" RowHeight="35" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#2B3553">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="#1E1E2E"/>
