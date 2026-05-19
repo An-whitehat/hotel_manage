@@ -3,26 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-<<<<<<< HEAD
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using QLKS.Models;
 using QLKS.Commands;
-=======
-using System.Windows.Input;
-using QLKS.Models;
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
+
 
 namespace QLKS.ViewModels
 {
     public class CategoryViewModel : BaseViewModel
     {
-<<<<<<< HEAD
-        public ObservableCollection<LoaiPhong> ListLoaiPhong { get; set; }
-        public ObservableCollection<DichVu> ListDichVu { get; set; }
-
-        // Đối tượng đang được chọn trên DataGrid
-=======
         private HotelManagementEntities _db = new HotelManagementEntities();
 
         // Danh sách hiển thị lên UI
@@ -30,12 +21,10 @@ namespace QLKS.ViewModels
         public ObservableCollection<DichVu> ListDichVu { get; set; }
 
         // Đối tượng ràng buộc khi Chọn dòng trên DataGrid hoặc điền Form
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
         private LoaiPhong _selectedLoaiPhong;
         public LoaiPhong SelectedLoaiPhong
         {
             get => _selectedLoaiPhong;
-<<<<<<< HEAD
             set
             {
                 _selectedLoaiPhong = value;
@@ -48,16 +37,12 @@ namespace QLKS.ViewModels
                     MoTaLoaiPhong = _selectedLoaiPhong.MoTa;
                 }
             }
-=======
-            set { _selectedLoaiPhong = value; OnPropertyChanged(); }
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
         }
 
         private DichVu _selectedDichVu;
         public DichVu SelectedDichVu
         {
             get => _selectedDichVu;
-<<<<<<< HEAD
             set
             {
                 _selectedDichVu = value;
@@ -94,21 +79,12 @@ namespace QLKS.ViewModels
         private string _moTaDichVu;
         public string MoTaDichVu { get => _moTaDichVu; set { _moTaDichVu = value; OnPropertyChanged(); } }
 
-        // Commands hành động
-=======
-            set { _selectedDichVu = value; OnPropertyChanged(); }
-        }
-
         // Commands cho Loại Phòng
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
         public ICommand AddLoaiPhongCmd { get; set; }
         public ICommand EditLoaiPhongCmd { get; set; }
         public ICommand DeleteLoaiPhongCmd { get; set; }
 
-<<<<<<< HEAD
-=======
         // Commands cho Dịch Vụ
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
         public ICommand AddDichVuCmd { get; set; }
         public ICommand EditDichVuCmd { get; set; }
         public ICommand DeleteDichVuCmd { get; set; }
@@ -117,180 +93,54 @@ namespace QLKS.ViewModels
         {
             LoadData();
 
-<<<<<<< HEAD
-            // Khởi tạo Commands cho Loại Phòng
-            AddLoaiPhongCmd = new RelayCommand<object>((p) => AddLoaiPhong());
-            EditLoaiPhongCmd = new RelayCommand<object>((p) => EditLoaiPhong(), (p) => SelectedLoaiPhong != null);
-            DeleteLoaiPhongCmd = new RelayCommand<object>((p) => DeleteLoaiPhong(), (p) => SelectedLoaiPhong != null);
-
-            // Khởi tạo Commands cho Dịch Vụ
-            AddDichVuCmd = new RelayCommand<object>((p) => AddDichVu());
-            EditDichVuCmd = new RelayCommand<object>((p) => EditDichVu(), (p) => SelectedDichVu != null);
-            DeleteDichVuCmd = new RelayCommand<object>((p) => DeleteDichVu(), (p) => SelectedDichVu != null);
-=======
             // Khởi tạo các Command CRUD Loại Phòng
-            AddLoaiPhongCmd = new RelayCommand<object>(p => true, p => {
+            AddLoaiPhongCmd = new RelayCommand(p => {
                 var lp = new LoaiPhong { TenLoaiPhong = "Loại phòng mới", GiaPhong = 0, SoGiuong = 2, NgayTao = System.DateTime.Now };
                 _db.LoaiPhongs.Add(lp);
                 _db.SaveChanges();
                 ListLoaiPhong.Add(lp);
             });
 
-            EditLoaiPhongCmd = new RelayCommand<object>(p => SelectedLoaiPhong != null, p => {
+            EditLoaiPhongCmd = new RelayCommand(p => {
                 _db.SaveChanges();
                 MessageBox.Show("Cập nhật loại phòng thành công!");
-            });
+            }, p => SelectedLoaiPhong != null);
 
-            DeleteLoaiPhongCmd = new RelayCommand<object>(p => SelectedLoaiPhong != null, p => {
+            DeleteLoaiPhongCmd = new RelayCommand(p => {
                 if (MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     _db.LoaiPhongs.Remove(SelectedLoaiPhong);
                     _db.SaveChanges();
                     ListLoaiPhong.Remove(SelectedLoaiPhong);
                 }
-            });
+            }, p => SelectedLoaiPhong != null);
 
-            // Khởi tạo các Command CRUD Dịch Vụ
-            AddDichVuCmd = new RelayCommand<object>(p => true, p => {
+            AddDichVuCmd = new RelayCommand(p => {
                 var dv = new DichVu { TenDichVu = "Dịch vụ mới", GiaDichVu = 0, NgayTao = System.DateTime.Now };
                 _db.DichVus.Add(dv);
                 _db.SaveChanges();
                 ListDichVu.Add(dv);
             });
 
-            EditDichVuCmd = new RelayCommand<object>(p => SelectedDichVu != null, p => {
+            EditDichVuCmd = new RelayCommand(p => {
                 _db.SaveChanges();
                 MessageBox.Show("Cập nhật dịch vụ thành công!");
-            });
+            }, p => SelectedDichVu != null);
 
-            DeleteDichVuCmd = new RelayCommand<object>(p => SelectedDichVu != null, p => {
+            DeleteDichVuCmd = new RelayCommand(p => {
                 if (MessageBox.Show("Bạn có chắc muốn xóa dịch vụ này?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     _db.DichVus.Remove(SelectedDichVu);
                     _db.SaveChanges();
                     ListDichVu.Remove(SelectedDichVu);
                 }
-            });
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
+            }, p => SelectedDichVu != null);
         }
 
         private void LoadData()
         {
-<<<<<<< HEAD
-            using (var db = new HotelDbContext())
-            {
-                ListLoaiPhong = new ObservableCollection<LoaiPhong>(db.LoaiPhongs.ToList());
-                ListDichVu = new ObservableCollection<DichVu>(db.DichVus.ToList());
-            }
-        }
-
-        // ---- NGHIỆP VỤ LOẠI PHÒNG ----
-        private void AddLoaiPhong()
-        {
-            if (string.IsNullOrEmpty(TenLoaiPhong)) return;
-            using (var db = new HotelDbContext())
-            {
-                var lp = new LoaiPhong { TenLoaiPhong = TenLoaiPhong, GiaPhong = GiaPhong, SoGiuong = SoGiuong, MoTa = MoTaLoaiPhong };
-                db.LoaiPhongs.Add(lp);
-                db.SaveChanges();
-                ListLoaiPhong.Add(lp);
-                ClearLoaiPhongForm();
-            }
-        }
-
-        private void EditLoaiPhong()
-        {
-            using (var db = new HotelDbContext())
-            {
-                var lp = db.LoaiPhongs.Find(SelectedLoaiPhong.MaLoaiPhong);
-                if (lp != null)
-                {
-                    lp.TenLoaiPhong = TenLoaiPhong;
-                    lp.GiaPhong = GiaPhong;
-                    lp.SoGiuong = SoGiuong;
-                    lp.MoTa = MoTaLoaiPhong;
-                    db.SaveChanges();
-                    LoadData();
-                }
-            }
-        }
-
-        private void DeleteLoaiPhong()
-        {
-            var res = MessageBox.Show("Bạn có chắc chắn muốn xóa loại phòng này không?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (res == MessageBoxResult.Yes)
-            {
-                using (var db = new HotelDbContext())
-                {
-                    var lp = db.LoaiPhongs.Find(SelectedLoaiPhong.MaLoaiPhong);
-                    if (lp != null)
-                    {
-                        // Kiểm tra xem có phòng nào đang thuộc loại phòng này không để tránh lỗi khóa ngoại
-                        if (db.Phongs.Any(x => x.MaLoaiPhong == lp.MaLoaiPhong))
-                        {
-                            MessageBox.Show("Không thể xóa! Loại phòng này đang được gán cho các phòng thực tế.", "Lỗi dữ liệu", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                        db.LoaiPhongs.Remove(lp);
-                        db.SaveChanges();
-                        ListLoaiPhong.Remove(SelectedLoaiPhong);
-                        ClearLoaiPhongForm();
-                    }
-                }
-            }
-        }
-
-        // ---- NGHIỆP VỤ DỊCH VỤ ----
-        private void AddDichVu()
-        {
-            if (string.IsNullOrEmpty(TenDichVu)) return;
-            using (var db = new HotelDbContext())
-            {
-                var dv = new DichVu { TenDichVu = TenDichVu, GiaDichVu = GiaDichVu, MoTa = MoTaDichVu };
-                db.DichVus.Add(dv);
-                db.SaveChanges();
-                ListDichVu.Add(dv);
-                ClearDichVuForm();
-            }
-        }
-
-        private void EditDichVu()
-        {
-            using (var db = new HotelDbContext())
-            {
-                var dv = db.DichVus.Find(SelectedDichVu.MaDichVu);
-                if (dv != null)
-                {
-                    dv.TenDichVu = TenDichVu;
-                    dv.GiaDichVu = GiaDichVu;
-                    dv.MoTa = MoTaDichVu;
-                    db.SaveChanges();
-                    LoadData();
-                }
-            }
-        }
-
-        private void DeleteDichVu()
-        {
-            using (var db = new HotelDbContext())
-            {
-                var dv = db.DichVus.Find(SelectedDichVu.MaDichVu);
-                if (dv != null)
-                {
-                    db.DichVus.Remove(dv);
-                    db.SaveChanges();
-                    ListDichVu.Remove(SelectedDichVu);
-                    ClearDichVuForm();
-                }
-            }
-        }
-
-        private void ClearLoaiPhongForm() { TenLoaiPhong = ""; GiaPhong = 0; SoGiuong = 2; MoTaLoaiPhong = ""; SelectedLoaiPhong = null; }
-        private void ClearDichVuForm() { TenDichVu = ""; GiaDichVu = 0; MoTaDichVu = ""; SelectedDichVu = null; }
-=======
             ListLoaiPhong = new ObservableCollection<LoaiPhong>(_db.LoaiPhongs.ToList());
             ListDichVu = new ObservableCollection<DichVu>(_db.DichVus.ToList());
         }
->>>>>>> 83c1e4f5a5338a02b6ac30b4f13eee94d7f15a74
     }
 }

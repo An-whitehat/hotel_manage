@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="QLKS.Views.SearchView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:QLKS.ViewModels"
              Background="#F4F6F9">
@@ -126,7 +127,7 @@
                         <x:Null/>
                     </Button.CommandParameter>
                     <!-- Dùng code-behind đơn giản cho Reset vì SearchViewModel chưa có ResetCommand -->
-                    <i:Interaction.Triggers                xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
+                    <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction
                                 Command="{Binding DataContext.ResetCommand,

@@ -11,6 +11,7 @@ namespace QLKS.Models
 {
     using System;
     using System.Data.Entity;
+    using System.Collections.ObjectModel;
     using System.Data.Entity.Infrastructure;
     
     public partial class HotelManagementEntities : DbContext

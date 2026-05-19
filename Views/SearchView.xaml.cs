@@ -17,7 +17,7 @@ namespace QLKS.Views
     /// <summary>
     /// Interaction logic for SearchView.xaml
     /// </summary>
-    public partial class SearchView : Window
+    public partial class SearchView : UserControl
     {
         public SearchView()
         {
