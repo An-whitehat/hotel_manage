@@ -1,0 +1,306 @@
+﻿<UserControl x:Class="QLKS.Views.FloorPlanViewUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:QLKS.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="900" d:DesignHeight="600"
+             Background="#F4F6F9">
+
+    <UserControl.DataContext>
+        <vm:FloorPlanViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Legend + nút làm mới -->
+            <RowDefinition Height="*"/>
+            <!-- Sơ đồ phòng -->
+        </Grid.RowDefinitions>
+
+        <!-- ═══════════════════════════════════════════════════
+             ROW 0 — LEGEND + TOOLBAR
+        ════════════════════════════════════════════════════ -->
+        <Border Grid.Row="0"
+                Background="White"
+                CornerRadius="8"
+                Padding="16,12"
+                Margin="16,16,16,8">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.08" Color="#000000"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Legend màu sắc + thống kê -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+
+                    <!-- Trống -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <Border Width="14" Height="14" CornerRadius="3"
+                                Background="#2ECC71" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="13" Foreground="#555">
+                            <Run Text="Trống ("/><Run Text="{Binding SoPhongTrong}"/><Run Text=")"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Đang sử dụng -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <Border Width="14" Height="14" CornerRadius="3"
+                                Background="#E74C3C" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="13" Foreground="#555">
+                            <Run Text="Đang dùng ("/><Run Text="{Binding SoPhongDangDung}"/><Run Text=")"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Bảo trì / Dọn -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <Border Width="14" Height="14" CornerRadius="3"
+                                Background="#F39C12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="13" Foreground="#555">
+                            <Run Text="Bảo trì/Dọn ("/><Run Text="{Binding SoPhongBaoTri}"/><Run Text=")"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Nút làm mới -->
+                <Button Grid.Column="1"
+                        Content="↺  Làm mới"
+                        Command="{Binding LamMoiCommand}"
+                        Height="34" Padding="14,0"
+                        FontSize="13" Cursor="Hand"
+                        Foreground="#1a2235" Background="White"
+                        BorderBrush="#DDDDDD" BorderThickness="1">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#F4F6F9"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- ═══════════════════════════════════════════════════
+             ROW 1 — SƠ ĐỒ PHÒNG (scroll được)
+        ════════════════════════════════════════════════════ -->
+        <Grid Grid.Row="1" Margin="16,0,16,16">
+            <!-- Sơ đồ phòng theo tầng -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding DanhSachTang}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Mỗi tầng = 1 block -->
+                            <Border Background="White"
+                                    CornerRadius="8"
+                                    Margin="0,0,0,12"
+                                    Padding="16">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.08" Color="#000000"/>
+                                </Border.Effect>
+
+                                <StackPanel>
+                                    <!-- Tên tầng -->
+                                    <TextBlock Text="{Binding TenTang}"
+                                               FontSize="15"
+                                               FontWeight="SemiBold"
+                                               Foreground="#1a2235"
+                                               Margin="0,0,0,12"/>
+
+                                    <!-- Grid phòng động: wrap tự động -->
+                                    <ItemsControl ItemsSource="{Binding DanhSachPhong}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <!-- Button mỗi phòng -->
+                                                <Button Width="90" Height="70"
+                                                        Margin="6"
+                                                        Cursor="Hand"
+                                                        Command="{Binding DataContext.ChonPhongCommand,
+                                                                  RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="Button">
+                                                                        <Border Background="{Binding MauNen}"
+                                                                                CornerRadius="8"
+                                                                                Padding="6">
+                                                                            <Border.Effect>
+                                                                                <DropShadowEffect BlurRadius="4" ShadowDepth="1" Opacity="0.15" Color="#000000"/>
+                                                                            </Border.Effect>
+                                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                                <TextBlock Text="{Binding SoPhong}"
+                                                                                           Foreground="{Binding MauChu}"
+                                                                                           FontSize="16"
+                                                                                           FontWeight="Bold"
+                                                                                           HorizontalAlignment="Center"/>
+                                                                                <TextBlock Text="{Binding TenLoaiPhong}"
+                                                                                           Foreground="{Binding MauChu}"
+                                                                                           FontSize="10"
+                                                                                           Opacity="0.85"
+                                                                                           HorizontalAlignment="Center"
+                                                                                           TextTrimming="CharacterEllipsis"/>   
+                                                                            </StackPanel>
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter Property="Opacity" Value="0.85"/>
+                                                                            </Trigger>
+                                                                            <Trigger Property="IsPressed" Value="True">
+                                                                                <Setter Property="Opacity" Value="0.7"/>
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </Button.Style>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- ── POPUP Chi tiết phòng (hiện khi click) ───────────────── -->
+            <Border Visibility="{Binding CoPhongDangChon, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Background="#CC000000"
+                    CornerRadius="0">
+                <!-- Overlay mờ -->
+                <Border Width="320"
+                        Background="White"
+                        CornerRadius="12"
+                        Padding="24"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="20" ShadowDepth="2" Opacity="0.2" Color="#000000"/>
+                    </Border.Effect>
+
+                    <StackPanel>
+                        <!-- Header popup -->
+                        <Grid Margin="0,0,0,16">
+                            <TextBlock Text="Chi tiết phòng"
+                                       FontSize="16" FontWeight="SemiBold"
+                                       Foreground="#1a2235"
+                                       VerticalAlignment="Center"/>
+                            <Button Content="✕"
+                                    HorizontalAlignment="Right"
+                                    Command="{Binding DongChiTietCommand}"
+                                    Width="28" Height="28"
+                                    FontSize="13"
+                                    Foreground="#999"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Cursor="Hand"/>
+                        </Grid>
+
+                        <!-- Badge trạng thái -->
+                        <Border CornerRadius="4" Padding="10,6"
+                                Margin="0,0,0,16"
+                                HorizontalAlignment="Left">
+                            <Border.Background>
+                                <Binding Path="PhongDangChon.MauNen"/>
+                            </Border.Background>
+                            <TextBlock Text="{Binding PhongDangChon.TrangThai}"
+                                       Foreground="White" FontSize="13" FontWeight="SemiBold"/>
+                        </Border>
+
+                        <!-- Thông tin -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Số phòng:"
+                                       Foreground="#888" FontSize="13" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding PhongDangChon.SoPhong}"
+                                       FontSize="13" FontWeight="SemiBold" Foreground="#1a2235" VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Loại phòng:"
+                                       Foreground="#888" FontSize="13" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding PhongDangChon.TenLoaiPhong}"
+                                       FontSize="13" Foreground="#1a2235" VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Ghi chú:"
+                                       Foreground="#888" FontSize="13" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1"
+                                       Text="{Binding PhongDangChon.GhiChu}"
+                                       FontSize="13" Foreground="#1a2235" VerticalAlignment="Center"
+                                       TextWrapping="Wrap"/>
+                        </Grid>
+
+                        <!-- Nút Đóng -->
+                        <Button Content="Đóng"
+                                Command="{Binding DongChiTietCommand}"
+                                Height="38" Margin="0,12,0,0"
+                                FontSize="13" Cursor="Hand"
+                                Foreground="White" Background="#1a2235"
+                                BorderThickness="0">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#2C3E50"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
