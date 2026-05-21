@@ -1,28 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using QLKS.ViewModels;
 
 namespace QLKS
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            ShowLogin();
+        }
+
+        private void ShowLogin()
+        {
+            MainContent.Content = new LoginView
+            {
+                DataContext = new LoginViewModel(() =>
+                {
+                    MainContent.Content = new StaffView
+                    {
+                        DataContext = new StaffViewModel()
+                    };
+                })
+            };
+        }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            ShowLogin();
+        }
+
+        private void BtnStaff_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new StaffView
+            {
+                DataContext = new StaffViewModel()
+            };
+        }
+
+        private void BtnBooking_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new BookingView
+            {
+                DataContext = new BookingViewModel()
+            };
+        }
+
+        private void BtnInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new InvoiceCheckoutView
+            {
+                DataContext = new InvoiceCheckoutViewModel()
+            };
         }
     }
 }

@@ -1,0 +1,93 @@
+<UserControl x:Class="QLKS.StaffView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="16">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+        <Border Background="#2F3F92" CornerRadius="12" Padding="18" Margin="0,0,0,12">
+            <DockPanel>
+                <StackPanel>
+                    <TextBlock Text="Quản lý nhân viên + ca làm việc" Foreground="White" FontSize="24" FontWeight="Bold"/>
+                    <TextBlock Text="CRUD nhân viên, phân ca, tìm kiếm, in danh sách" Foreground="#DDE4FF"/>
+                </StackPanel>
+                <Button DockPanel.Dock="Right" Content="In danh sách" Command="{Binding PrintStaffShiftCommand}" Padding="15,8" Width="817"/>
+            </DockPanel>
+        </Border>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Nhân viên">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="360"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                    <Border Background="White" Padding="14" CornerRadius="10">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+                            <TextBlock Text="Thông tin nhân viên" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"/>
+                            <TextBlock Text="Mã NV"/><TextBox Text="{Binding MaNV}" IsReadOnly="True" Margin="0,3,0,8"/>
+                            <TextBlock Text="Họ tên"/><TextBox Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,0,8"/>
+                            <TextBlock Text="Username"/><TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,0,8"/>
+                            <TextBlock Text="Password"/><TextBox Text="{Binding PasswordHash, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,0,8"/>
+                            <TextBlock Text="Vai trò"/><ComboBox ItemsSource="{Binding VaiTroList}" SelectedItem="{Binding VaiTro}" Margin="0,3,0,8"/>
+                            <TextBlock Text="SĐT"/><TextBox Text="{Binding SDT, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,0,8"/>
+                            <TextBlock Text="Ngày vào làm"/><DatePicker SelectedDate="{Binding NgayVaoLam}" Margin="0,3,0,8"/>
+                            <CheckBox Content="Đang làm" IsChecked="{Binding TrangThai}" Margin="0,3,0,12"/>
+                            <WrapPanel>
+                                <Button Content="Thêm" Command="{Binding AddStaffCommand}" Margin="3" Padding="14,7"/>
+                                <Button Content="Sửa" Command="{Binding UpdateStaffCommand}" Margin="3" Padding="14,7"/>
+                                <Button Content="Xóa" Command="{Binding DeleteStaffCommand}" Margin="3" Padding="14,7"/>
+                                <Button Content="Mới" Command="{Binding ClearStaffCommand}" Margin="3" Padding="14,7"/>
+                            </WrapPanel>
+                        </StackPanel></ScrollViewer>
+                    </Border>
+                    <Border Grid.Column="2" Background="White" Padding="14" CornerRadius="10">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBox Text="{Binding Keyword, UpdateSourceTrigger=PropertyChanged}" Width="280" Height="32" Margin="0,0,8,0"/>
+                                <Button Content="Tìm" Command="{Binding SearchCommand}" Width="80"/>
+                                <Button Content="Tải lại" Command="{Binding LoadCommand}" Width="80" Margin="8,0,0,0"/>
+                            </StackPanel>
+                            <DataGrid ItemsSource="{Binding NhanViens}" SelectedItem="{Binding SelectedNhanVien}" AutoGenerateColumns="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã" Binding="{Binding MaNV}" Width="60"/>
+                                    <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTen}" Width="180"/>
+                                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="120"/>
+                                    <DataGridTextColumn Header="Vai trò" Binding="{Binding VaiTro}" Width="100"/>
+                                    <DataGridTextColumn Header="SĐT" Binding="{Binding SDT}" Width="120"/>
+                                    <DataGridTextColumn Header="Ngày vào" Binding="{Binding NgayVaoLam, StringFormat=dd/MM/yyyy}" Width="110"/>
+                                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding TrangThaiText}" Width="110"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Ca làm việc">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="320"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                    <Border Background="White" Padding="14" CornerRadius="10"><StackPanel>
+                        <TextBlock Text="Thông tin ca" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"/>
+                        <TextBlock Text="Mã ca"/><TextBox Text="{Binding MaCa}" IsReadOnly="True" Margin="0,3,0,8"/>
+                        <TextBlock Text="Mã nhân viên"/><TextBox Text="{Binding CaMaNV, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,0,8"/>
+                        <TextBlock Text="Ngày làm"/><DatePicker SelectedDate="{Binding NgayLam}" Margin="0,3,0,8"/>
+                        <TextBlock Text="Ca"/><ComboBox ItemsSource="{Binding CaList}" SelectedItem="{Binding Ca}" Margin="0,3,0,8"/>
+                        <TextBlock Text="Ghi chú"/><TextBox Text="{Binding GhiChuCa, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,0,12"/>
+                        <WrapPanel>
+                            <Button Content="Thêm" Command="{Binding AddShiftCommand}" Margin="3" Padding="14,7"/>
+                            <Button Content="Sửa" Command="{Binding UpdateShiftCommand}" Margin="3" Padding="14,7"/>
+                            <Button Content="Xóa" Command="{Binding DeleteShiftCommand}" Margin="3" Padding="14,7"/>
+                            <Button Content="Mới" Command="{Binding ClearShiftCommand}" Margin="3" Padding="14,7"/>
+                        </WrapPanel>
+                    </StackPanel></Border>
+                    <Border Grid.Column="2" Background="White" Padding="14" CornerRadius="10">
+                        <DataGrid ItemsSource="{Binding CaLamViecs}" SelectedItem="{Binding SelectedCa}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Mã ca" Binding="{Binding MaCa}" Width="70"/>
+                                <DataGridTextColumn Header="Mã NV" Binding="{Binding MaNV}" Width="70"/>
+                                <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTen}" Width="180"/>
+                                <DataGridTextColumn Header="Ngày làm" Binding="{Binding NgayLam, StringFormat=dd/MM/yyyy}" Width="120"/>
+                                <DataGridTextColumn Header="Ca" Binding="{Binding Ca}" Width="90"/>
+                                <DataGridTextColumn Header="Ghi chú" Binding="{Binding GhiChu}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
