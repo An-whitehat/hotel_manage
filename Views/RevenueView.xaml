@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="QLKS.Views.RevenueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1000"
+             Background="#1E1E2E">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="THỐNG KÊ DOANH THU" FontSize="24" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,0,0,20"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="#27293D" CornerRadius="8" Padding="20" Margin="0,0,20,0">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Khoảng thời gian thống kê" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,15"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="0,0,15,0">
+                            <TextBlock Text="Từ ngày" Foreground="#A9A9B8" Margin="0,0,0,5"/>
+                            <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="35"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="0,0,15,0">
+                            <TextBlock Text="Đến ngày" Foreground="#A9A9B8" Margin="0,0,0,5"/>
+                            <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="35"/>
+                        </StackPanel>
+
+                        <Button Grid.Column="2" Content="Xem Thống Kê" Command="{Binding ThongKeCommand}" 
+                                Background="#E14ECA" Foreground="White" FontWeight="Bold" Width="130" Height="35" VerticalAlignment="Bottom" BorderThickness="0"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Background="#27293D" CornerRadius="8" Padding="20">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="TỔNG DOANH THU" FontSize="14" FontWeight="SemiBold" Foreground="#A9A9B8" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding TotalRevenue, StringFormat={}{0:N0} VNĐ}" FontSize="24" FontWeight="Bold" Foreground="#00FFC2" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="2" Background="#27293D" CornerRadius="8" Padding="10">
+            <DataGrid ItemsSource="{Binding RevenueList}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                      Background="#27293D" Foreground="White" RowBackground="#27293D" BorderThickness="0" RowHeight="35" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#2B3553">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#1E1E2E"/>
+                        <Setter Property="Foreground" Value="#A9A9B8"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="10,5"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Thời Gian / Ngày" Binding="{Binding ThoiGian}" Width="2*"/>
+                    <DataGridTextColumn Header="Số Lượng Hóa Đơn Đã Xuất" Binding="{Binding SoLuongHoaDon}" Width="1.5*"/>
+                    <DataGridTextColumn Header="Doanh Thu Thành Tiền" Binding="{Binding ThanhTien, StringFormat={}{0:N0} VNĐ}" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>
