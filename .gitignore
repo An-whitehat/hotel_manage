@@ -30,3 +30,13 @@ packages/
 ## [ OS FILES ]
 Thumbs.db
 desktop.ini
+
+# NuGet upgrade logs
+**/upgradelog.html
+upgrade*.html
+
+bin/
+obj/
+*.user
+upgradelog.html
+App.config

@@ -1,0 +1,11 @@
+﻿<Window x:Class="QLKS.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:QLKS"
+        Title="Happy Hotel - Đăng nhập"
+        Height="480" Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#F3F5F9">
+    <local:LoginView/>
+</Window>

@@ -1,126 +1,118 @@
 ﻿using QLKS.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using QLKS.Services;
+using System.Windows;
 
 namespace QLKS.ViewModels
 {
-    public class MainLayoutViewModel
+    public class MainLayoutViewModel : BaseViewModel
     {
-        public class MainViewModel : BaseViewModel
+        // ─── Current page being displayed ───────────────────────────────────
+        private BaseViewModel _currentViewModel;
+        public BaseViewModel CurrentViewModel
         {
-            // ─── Current page being displayed ───────────────────────────────────
-            private BaseViewModel _currentViewModel;
-            public BaseViewModel CurrentViewModel
+            get => _currentViewModel;
+            set { _currentViewModel = value; OnPropertyChanged(); }
+        }
+
+        // ─── Active nav item (để highlight button đang chọn) ────────────────
+        private string _currentPage;
+        public string CurrentPage
+        {
+            get => _currentPage;
+            set { _currentPage = value; OnPropertyChanged(); }
+        }
+
+        // ─── Title hiển thị trên TopBar ─────────────────────────────────────
+        private string _currentPageTitle = "Trang chủ";
+        public string CurrentPageTitle
+        {
+            get => _currentPageTitle;
+            set { _currentPageTitle = value; OnPropertyChanged(); }
+        }
+
+        // ─── Thông tin user đang đăng nhập ──────────────────────────────────
+        public string CurrentUser => SessionService.CurrentUser?.HoTen ?? "Admin";
+        public string VaiTro => SessionService.CurrentUser?.VaiTro ?? "";
+        public bool IsAdmin => SessionService.HasRole("Admin", "QuanLy");
+
+        // ─── Navigation Command (dùng CommandParameter từ XAML) ─────────────
+        public RelayCommand NavigateCommand { get; }
+        public RelayCommand DangXuatCommand { get; }
+
+        // ─── Constructor ─────────────────────────────────────────────────────
+        public MainLayoutViewModel()
+        {
+            NavigateCommand = new RelayCommand(param => HandleNavigate(param?.ToString()));
+            DangXuatCommand = new RelayCommand(_ => DangXuat());
+
+            // Mở trang mặc định
+            HandleNavigate("Staff");
+        }
+
+        // ─── Router điều hướng ───────────────────────────────────────────────
+        private void HandleNavigate(string page)
+        {
+            switch (page)
             {
-                get => _currentViewModel;
-                set
+                case "Staff":
+                    NavigateTo(page, "Nhân viên", new StaffViewModel());
+                    break;
+                case "Booking":
+                    NavigateTo(page, "Đặt phòng", new BookingViewModel());
+                    break;
+                case "FloorPlan":
+                    NavigateTo(page, "Sơ đồ phòng", new FloorPlanViewModel());
+                    break;
+                case "Search":
+                    NavigateTo(page, "Tìm kiếm", new SearchViewModel());
+                    break;
+                case "Invoice":
+                    NavigateTo(page, "Hóa đơn", new InvoiceCheckoutViewModel());
+                    break;
+                case "BaoCao":
+                case "Report":
+                    if (!IsAdmin)
+                    {
+                        MessageBox.Show("Chỉ Admin hoặc Quản lý mới xem được báo cáo.", "Phân quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    NavigateTo(page, "Báo cáo doanh thu", new BaoCaoViewModel());
+                    break;
+                // Các view chưa có ViewModel → bỏ qua hoặc thông báo
+                case "Dashboard":
+                    NavigateTo(page, "Trang chủ", null);
+                    break;
+                case "Room":
+                    NavigateTo(page, "Quản lý phòng", new RoomViewModel());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // ─── Helper ──────────────────────────────────────────────────────────
+        private void NavigateTo(string page, string title, BaseViewModel vm)
+        {
+            CurrentPage = page;
+            CurrentPageTitle = title;
+            CurrentViewModel = vm;
+        }
+
+        private void DangXuat()
+        {
+            SessionService.Logout();
+
+            var loginWindow = new MainWindow(); // hoặc tên Window khởi động app
+            loginWindow.Show();
+
+            foreach (System.Windows.Window w in System.Windows.Application.Current.Windows)
+            {
+                if (w is QLKS.Views.MainLayout)
                 {
-                    _currentViewModel = value;
-                    OnPropertyChanged();
+                    w.Close();
+                    break;
                 }
             }
-
-            // ─── Active nav item (để highlight button đang chọn) ────────────────
-            private string _currentPage;
-            public string CurrentPage
-            {
-                get => _currentPage;
-                set
-                {
-                    _currentPage = value;
-                    OnPropertyChanged();
-                }
-            }
-
-            // ─── Thông tin user đang đăng nhập ──────────────────────────────────
-            private string _currentUser;
-            public string CurrentUser
-            {
-                get => _currentUser;
-                set { _currentUser = value; OnPropertyChanged(); }
-            }
-
-            private bool _isAdmin;
-            public bool IsAdmin
-            {
-                get => _isAdmin;
-                set { _isAdmin = value; OnPropertyChanged(); }
-            }
-
-            // ─── Navigation Commands ─────────────────────────────────────────────
-            public RelayCommand NavigateDashboardCommand { get; }
-            public RelayCommand NavigatePhongCommand { get; }
-            public RelayCommand NavigateKhachHangCommand { get; }
-            public RelayCommand NavigateDatPhongCommand { get; }
-            public RelayCommand NavigateHoaDonCommand { get; }
-            public RelayCommand NavigateThongKeCommand { get; }
-            public RelayCommand NavigateBaoCaoCommand { get; }
-            public RelayCommand NavigateNhanVienCommand { get; }
-            public RelayCommand NavigateCauHinhCommand { get; }
-            public RelayCommand DangXuatCommand { get; }
-
-            // ─── Constructor ─────────────────────────────────────────────────────
-            //public MainViewModel(string username = "Admin", bool isAdmin = true)
-            //{
-            //    CurrentUser = username;
-            //    IsAdmin = isAdmin;
-
-            //    // Khởi động mở trang Dashboard
-            //    NavigateTo("Dashboard", new DashboardViewModel());
-
-            //    // Gán commands
-            //    NavigateDashboardCommand = new RelayCommand(_ => NavigateTo("Dashboard", new DashboardViewModel()));
-            //    NavigatePhongCommand = new RelayCommand(_ => NavigateTo("Phong", new PhongViewModel()));
-            //    NavigateKhachHangCommand = new RelayCommand(_ => NavigateTo("KhachHang", new KhachHangViewModel()));
-            //    NavigateDatPhongCommand = new RelayCommand(_ => NavigateTo("DatPhong", new DatPhongViewModel()));
-            //    NavigateHoaDonCommand = new RelayCommand(_ => NavigateTo("HoaDon", new HoaDonViewModel()));
-            //    NavigateThongKeCommand = new RelayCommand(_ => NavigateTo("ThongKe", new ThongKeViewModel()));
-
-            //    // Phân quyền: chỉ Admin mới vào được Báo cáo & Nhân viên
-            //    NavigateBaoCaoCommand = new RelayCommand(
-            //        _ => NavigateTo("BaoCao", new BaoCaoViewModel()),
-            //        _ => IsAdmin);
-
-            //    NavigateNhanVienCommand = new RelayCommand(
-            //        _ => NavigateTo("NhanVien", new NhanVienViewModel()),
-            //        _ => IsAdmin);
-
-            //    NavigateCauHinhCommand = new RelayCommand(_ => NavigateTo("CauHinh", new CauHinhViewModel()));
-
-            //    DangXuatCommand = new RelayCommand(_ => DangXuat());
-            //}
-
-            // ─── Helpers ─────────────────────────────────────────────────────────
-
-            /// <summary>
-            /// Đổi trang: cập nhật CurrentPage (để sidebar highlight)
-            /// và CurrentViewModel (để ContentControl render đúng View).
-            /// </summary>
-            //private void NavigateTo(string page, BaseViewModel vm)
-            //{
-            //    CurrentPage = page;
-            //    CurrentViewModel = vm;
-            //}
-
-            //private void DangXuat()
-            //{
-            //    // Mở lại LoginWindow, đóng MainWindow
-            //    var loginWindow = new QLKS.Views.LoginWindow();
-            //    loginWindow.Show();
-
-            //    // Đóng MainWindow hiện tại
-            //    foreach (System.Windows.Window w in System.Windows.Application.Current.Windows)
-            //    {
-            //        if (w is QLKS.Views.MainLayout)
-            //        {
-            //            w.Close();
-            //            break;
-            //        }
-            //    }
-            //}
         }
     }
 }

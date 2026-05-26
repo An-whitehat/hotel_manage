@@ -114,11 +114,7 @@
       <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
-
     <Reference Include="System.Configuration" />
-
- 
-
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Common, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Data.Common.4.3.0\lib\net451\System.Data.Common.dll</HintPath>
@@ -192,20 +188,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
-
-
     <Compile Include="Helpers\ExcelExporter.cs" />
-
     <Compile Include="Models\CaLamViec.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietHoaDon.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-
-
     <Compile Include="Models\DataProvider.cs" />
-
     <Compile Include="Models\DatPhong.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -242,15 +232,18 @@
     <Compile Include="Models\Phong.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-
     <Compile Include="Models\PhucModels.cs" />
     <Compile Include="Services\DbService.cs" />
+    <Compile Include="ViewModels\BaoCaoViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookingViewModel.cs" />
     <Compile Include="ViewModels\InvoiceCheckoutViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StaffViewModel.cs" />
+    <Compile Include="Views\BaoCaoView.xaml.cs">
+      <DependentUpon>BaoCaoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BookingView.xaml.cs">
       <DependentUpon>BookingView.xaml</DependentUpon>
     </Compile>
@@ -260,16 +253,17 @@
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StaffView.xaml.cs">
       <DependentUpon>StaffView.xaml</DependentUpon>
-
-  
+    </Compile>
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\ExportExcelViewModel.cs" />
     <Compile Include="ViewModels\FloorPlanViewModel.cs" />
     <Compile Include="ViewModels\InvoiceImportViewModel.cs" />
     <Compile Include="ViewModels\MainLayoutViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RoomViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="Views\FloorPlanViewUC.xaml.cs">
@@ -280,7 +274,6 @@
     </Compile>
     <Compile Include="Views\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
-
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -294,7 +287,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-
+    <Page Include="Views\BaoCaoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BookingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -307,8 +303,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StaffView.xaml">
-
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\FloorPlanViewUC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -318,7 +320,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SearchView.xaml">
-
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -365,7 +366,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
   <ItemGroup />
   <ItemGroup>
     <Content Include="Models\Model1.Context.tt">
@@ -375,10 +375,7 @@
     <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
-
       <DependentUpon>Model1.edmx</DependentUpon>
-
-
     </Content>
   </ItemGroup>
   <ItemGroup>

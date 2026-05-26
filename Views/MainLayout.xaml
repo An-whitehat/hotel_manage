@@ -3,32 +3,190 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QLKS.Views"
+        xmlns:vm="clr-namespace:QLKS.ViewModels"
         mc:Ignorable="d"
-        Title="MainLayout" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25*"/>
-            <RowDefinition Height="162*"/>
-            <RowDefinition Height="30*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="201*"/>
-            <ColumnDefinition Width="599*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="1" Grid.RowSpan="3"/>
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Happy Hotel" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="1">
-            <Button Content="Trang chủ" Height="36"/>
-            <Button Content="Quản lý phòng" Height="36"/>
-            <Button Content="Sơ đồ phòng" Height="36"/>
-            <Button Content="Đặt phòng" Height="37"/>
-            <Button Content="Khách hàng" Height="36"/>
-            <Button Content="Hóa đơn" Height="36"/>
-            <Button Content="Thống kê doanh thu" Height="36"/>
-            <Button Content="Báo cáo" Height="36"/>
-            <Button Content="Nhân viên" Height="36"/>
-        </StackPanel>
+        Title="Happy Hotel" Height="680" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="#F0F2F5">
+    <Window.DataContext>
+        <vm:MainLayoutViewModel/>
+    </Window.DataContext>
 
+    <Window.Resources>
+        <!-- Style nút sidebar -->
+        <Style x:Key="SidebarButton" TargetType="Button">
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Foreground" Value="#BDC3C7"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13.5"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="24,0,0,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0">
+                            <Grid>
+                                <!-- Active indicator -->
+                                <Rectangle x:Name="indicator"
+                                           Width="4"
+                                           HorizontalAlignment="Left"
+                                           Fill="Transparent"
+                                           RadiusX="2" RadiusY="2"/>
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2D4059"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1A6EBD"/>
+                                <Setter TargetName="indicator" Property="Fill" Value="#3498DB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ═══════ SIDEBAR ═══════ -->
+        <Border Grid.Column="0" Background="#1E2A3A">
+            <DockPanel>
+                <!-- Logo -->
+                <Border DockPanel.Dock="Top"
+                        Background="#162030"
+                        Height="64">
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <TextBlock Text="🏨  Happy Hotel"
+                                   Foreground="White"
+                                   FontSize="16"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="Hệ thống quản lý"
+                                   Foreground="#7F8C8D"
+                                   FontSize="10"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Divider -->
+                <Rectangle DockPanel.Dock="Top"
+                           Height="1"
+                           Fill="#2D3E50"
+                           Margin="16,0"/>
+
+                <!-- Menu label -->
+                <TextBlock DockPanel.Dock="Top"
+                           Text="MENU CHÍNH"
+                           Foreground="#4A5568"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Margin="24,16,0,8"
+                           />
+
+                <!-- Nav buttons -->
+                <StackPanel DockPanel.Dock="Top">
+                    <Button Content="📊  Trang chủ"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Dashboard"/>
+                    <Button Content="🛏  Quản lý phòng"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Room"/>
+                    <Button Content="🗺  Sơ đồ phòng"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="FloorPlan"/>
+                    <Button Content="📅  Đặt phòng"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Booking"/>
+                    <Button Content="👤  Khách hàng"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Search"/>
+                    <Button Content="🧾  Hóa đơn"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Invoice"/>
+                    <Button Content="📈  Thống kê doanh thu"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Revenue"/>
+                    <Button Content="📋  Báo cáo"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Report"/>
+                    <Button Content="👨‍💼  Nhân viên"
+                            Style="{StaticResource SidebarButton}"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Staff"/>
+                </StackPanel>
+
+                <!-- Bottom: user info -->
+                <Border DockPanel.Dock="Bottom"
+                        Background="#162030"
+                        Height="56"
+                        Padding="16,0">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="👤  Admin"
+                                   Foreground="White"
+                                   FontSize="13"/>
+                        <TextBlock Text="Quản trị viên"
+                                   Foreground="#7F8C8D"
+                                   FontSize="11"/>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </Border>
+
+        <!-- ═══════ MAIN CONTENT ═══════ -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="56"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Topbar -->
+            <Border Grid.Row="0"
+                    Background="White"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="0,0,0,1">
+                <Grid Margin="24,0">
+                    <TextBlock Text="{Binding CurrentPageTitle}"
+                               FontSize="15"
+                               FontWeight="SemiBold"
+                               Foreground="#2D3748"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='dd/MM/yyyy'}"
+                               HorizontalAlignment="Right"
+                               Foreground="#718096"
+                               FontSize="13"
+                               VerticalAlignment="Center"
+                               xmlns:sys="clr-namespace:System;assembly=mscorlib"/>
+                </Grid>
+            </Border>
+
+            <!-- Content area -->
+            <Border Grid.Row="1" Padding="20">
+                <ContentControl Content="{Binding CurrentView}"/>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

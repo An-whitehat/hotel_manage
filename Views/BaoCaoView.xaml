@@ -1,0 +1,317 @@
+﻿<UserControl x:Class="QLKS.Views.BaoCaoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="650" d:DesignWidth="1000"
+             Background="#F0F2F5">
+
+    <UserControl.Resources>
+        <!-- Style card trắng -->
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background"     Value="White"/>
+            <Setter Property="CornerRadius"   Value="10"/>
+            <Setter Property="Padding"        Value="16"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Button chính -->
+        <Style x:Key="BtnPrimary" TargetType="Button">
+            <Setter Property="Background"           Value="#2563EB"/>
+            <Setter Property="Foreground"           Value="White"/>
+            <Setter Property="FontSize"             Value="13"/>
+            <Setter Property="FontWeight"           Value="SemiBold"/>
+            <Setter Property="Padding"              Value="16,8"/>
+            <Setter Property="BorderThickness"      Value="0"/>
+            <Setter Property="Cursor"               Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1D4ED8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#93C5FD"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Button phụ (outline) -->
+        <Style x:Key="BtnOutline" TargetType="Button">
+            <Setter Property="Background"      Value="White"/>
+            <Setter Property="Foreground"      Value="#374151"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Padding"         Value="14,8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush"     Value="#D1D5DB"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F3F4F6"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#9CA3AF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Button lọc nhanh nhỏ -->
+        <Style x:Key="BtnFilter" TargetType="Button" BasedOn="{StaticResource BtnOutline}">
+            <Setter Property="FontSize"  Value="12"/>
+            <Setter Property="Padding"   Value="10,6"/>
+        </Style>
+
+        <!-- Label form -->
+        <Style x:Key="FormLabel" TargetType="TextBlock">
+            <Setter Property="FontSize"   Value="12"/>
+            <Setter Property="Foreground" Value="#6B7280"/>
+            <Setter Property="Margin"     Value="0,0,0,4"/>
+        </Style>
+
+        <!-- DataGrid style -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background"            Value="White"/>
+            <Setter Property="BorderThickness"       Value="0"/>
+            <Setter Property="GridLinesVisibility"   Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#F3F4F6"/>
+            <Setter Property="RowHeight"             Value="42"/>
+            <Setter Property="FontSize"              Value="13"/>
+            <Setter Property="Foreground"            Value="#374151"/>
+            <Setter Property="AlternatingRowBackground" Value="#FAFAFA"/>
+            <Setter Property="CanUserAddRows"        Value="False"/>
+            <Setter Property="CanUserDeleteRows"     Value="False"/>
+            <Setter Property="IsReadOnly"            Value="True"/>
+            <Setter Property="SelectionMode"         Value="Single"/>
+            <Setter Property="AutoGenerateColumns"   Value="False"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background"   Value="#F8FAFC"/>
+            <Setter Property="Foreground"   Value="#374151"/>
+            <Setter Property="FontWeight"   Value="SemiBold"/>
+            <Setter Property="FontSize"     Value="12"/>
+            <Setter Property="Padding"      Value="12,10"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="BorderBrush"  Value="#E5E7EB"/>
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding"          Value="12,0"/>
+            <Setter Property="BorderThickness"  Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Tiêu đề -->
+            <RowDefinition Height="Auto"/>
+            <!-- Bộ lọc -->
+            <RowDefinition Height="Auto"/>
+            <!-- Thống kê nhanh -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Status bar -->
+        </Grid.RowDefinitions>
+
+        <!-- ═══ TIÊU ĐỀ ════════════════════════════════════════════════════ -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+            <TextBlock Text="📊" FontSize="22" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <StackPanel>
+                <TextBlock Text="Báo cáo doanh thu" FontSize="22" FontWeight="Bold" Foreground="#111827"/>
+                <TextBlock Text="Thống kê theo loại phòng" FontSize="13" Foreground="#6B7280"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- ═══ BỘ LỌC ══════════════════════════════════════════════════════ -->
+        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0,0,0,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Từ ngày -->
+                <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                    <TextBlock Text="Từ ngày" Style="{StaticResource FormLabel}"/>
+                    <DatePicker SelectedDate="{Binding TuNgay}" Width="130" FontSize="13"/>
+                </StackPanel>
+
+                <!-- Đến ngày -->
+                <StackPanel Grid.Column="1" Margin="0,0,16,0">
+                    <TextBlock Text="Đến ngày" Style="{StaticResource FormLabel}"/>
+                    <DatePicker SelectedDate="{Binding DenNgay}" Width="130" FontSize="13"/>
+                </StackPanel>
+
+                <!-- Nút xem -->
+                <StackPanel Grid.Column="2" VerticalAlignment="Bottom" Margin="0,0,20,0">
+                    <Button Content="🔍  Xem báo cáo"
+                            Command="{Binding XemBaoCaoCommand}"
+                            Style="{StaticResource BtnPrimary}"/>
+                </StackPanel>
+
+                <!-- Spacer -->
+                <StackPanel Grid.Column="3"/>
+
+                <!-- Lọc nhanh -->
+                <TextBlock Grid.Column="4" Text="Lọc nhanh:" VerticalAlignment="Bottom"
+                           Margin="0,0,8,8" Foreground="#6B7280" FontSize="12"/>
+                <Button Grid.Column="5" Content="Tháng này"
+                        Command="{Binding ThangNayCommand}"
+                        Style="{StaticResource BtnFilter}" Margin="0,0,6,0"
+                        VerticalAlignment="Bottom"/>
+                <Button Grid.Column="6" Content="Quý này"
+                        Command="{Binding QuyNayCommand}"
+                        Style="{StaticResource BtnFilter}" Margin="0,0,6,0"
+                        VerticalAlignment="Bottom"/>
+                <Button Grid.Column="7" Content="Năm nay"
+                        Command="{Binding NamNayCommand}"
+                        Style="{StaticResource BtnFilter}"
+                        VerticalAlignment="Bottom"/>
+            </Grid>
+        </Border>
+
+        <!-- ═══ THỐNG KÊ NHANH ═══════════════════════════════════════════════ -->
+        <Grid Grid.Row="2" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Tổng doanh thu -->
+            <Border Grid.Column="0" Style="{StaticResource Card}" Margin="0,0,12,0">
+                <StackPanel>
+                    <TextBlock Text="Tổng doanh thu" FontSize="12" Foreground="#6B7280"/>
+                    <TextBlock Text="{Binding TongDoanhThu, StringFormat={}{0:N0} ₫}"
+                               FontSize="22" FontWeight="Bold" Foreground="#2563EB" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Tổng lượt đặt -->
+            <Border Grid.Column="1" Style="{StaticResource Card}" Margin="0,0,12,0">
+                <StackPanel>
+                    <TextBlock Text="Tổng lượt đặt phòng" FontSize="12" Foreground="#6B7280"/>
+                    <TextBlock Text="{Binding TongLuotDat, StringFormat={}{0} lượt}"
+                               FontSize="22" FontWeight="Bold" Foreground="#059669" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Số loại phòng -->
+            <Border Grid.Column="2" Style="{StaticResource Card}" Margin="0,0,12,0">
+                <StackPanel>
+                    <TextBlock Text="Số loại phòng" FontSize="12" Foreground="#6B7280"/>
+                    <TextBlock Text="{Binding DanhSachBaoCao.Count, StringFormat={}{0} loại}"
+                               FontSize="22" FontWeight="Bold" Foreground="#D97706" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Nút xuất -->
+            <StackPanel Grid.Column="3" VerticalAlignment="Center">
+                <Button Content="📥  Xuất Excel"
+                        Command="{Binding XuatExcelCommand}"
+                        Style="{StaticResource BtnOutline}"
+                        Margin="0,0,0,8"/>
+                <Button Content="🖨  In báo cáo"
+                        Command="{Binding InBaoCaoCommand}"
+                        Style="{StaticResource BtnOutline}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ═══ DATAGRID ═════════════════════════════════════════════════════ -->
+        <Border Grid.Row="3" Style="{StaticResource Card}" Padding="0">
+            <DataGrid ItemsSource="{Binding DanhSachBaoCao}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Loại phòng"     Binding="{Binding TenLoaiPhong}"              Width="*"   MinWidth="160"/>
+                    <DataGridTextColumn Header="Số phòng"       Binding="{Binding SoPhong}"                   Width="90"  MinWidth="80"/>
+                    <DataGridTextColumn Header="Lượt đặt"       Binding="{Binding SoLuotDat}"                 Width="90"  MinWidth="80"/>
+                    <DataGridTextColumn Header="Tổng ngày thuê" Binding="{Binding TongNgayThue}"              Width="120" MinWidth="100"/>
+                    <DataGridTextColumn Header="Doanh thu (₫)"  Binding="{Binding DoanhThu, StringFormat=N0}" Width="150" MinWidth="130"/>
+
+                    <!-- Cột tỷ lệ có thanh progress -->
+                    <DataGridTemplateColumn Header="Tỷ lệ" Width="140" MinWidth="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid Margin="12,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="4"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0"
+                                               Text="{Binding TyLe, StringFormat={}{0}%}"
+                                               FontSize="12" Foreground="#374151"
+                                               HorizontalAlignment="Right"/>
+                                    <Grid Grid.Row="1" Background="#E5E7EB" Height="4">
+                                        <Border HorizontalAlignment="Left"
+                                                Background="#2563EB" Height="4"
+                                                CornerRadius="2">
+                                            <Border.Width>
+                                                <Binding Path="TyLe"
+                                                         Converter="{StaticResource PercentToWidthConverter}"
+                                                         ConverterParameter="120"/>
+                                            </Border.Width>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+                <!-- Empty state -->
+                <DataGrid.Style>
+                    <Style TargetType="DataGrid">
+                        <Setter Property="Background"            Value="White"/>
+                        <Setter Property="BorderThickness"       Value="0"/>
+                        <Setter Property="GridLinesVisibility"   Value="Horizontal"/>
+                        <Setter Property="HorizontalGridLinesBrush" Value="#F3F4F6"/>
+                        <Setter Property="RowHeight"             Value="42"/>
+                        <Setter Property="FontSize"              Value="13"/>
+                        <Setter Property="AlternatingRowBackground" Value="#FAFAFA"/>
+                        <Setter Property="CanUserAddRows"        Value="False"/>
+                        <Setter Property="IsReadOnly"            Value="True"/>
+                        <Setter Property="AutoGenerateColumns"   Value="False"/>
+                    </Style>
+                </DataGrid.Style>
+            </DataGrid>
+        </Border>
+
+        <!-- ═══ STATUS BAR ═══════════════════════════════════════════════════ -->
+        <TextBlock Grid.Row="4"
+                   Text="{Binding TrangThaiBaoCao}"
+                   FontSize="12" Foreground="#6B7280"
+                   Margin="0,10,0,0"/>
+    </Grid>
+</UserControl>

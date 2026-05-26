@@ -12,7 +12,9 @@ namespace QLKS.Services
         {
             get
             {
-                return @"Data Source=.;Initial Catalog=HotelManagement;Integrated Security=True;TrustServerCertificate=True";
+                // Đọc từ App.config thay vì hardcode
+                return ConfigurationManager.ConnectionStrings["HotelManagementDB"]?.ConnectionString
+                    ?? @"Data Source=.;Initial Catalog=HotelManagement;Integrated Security=True;TrustServerCertificate=True";
             }
         }
 
