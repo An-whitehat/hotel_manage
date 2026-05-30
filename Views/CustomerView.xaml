@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="QLKS.Views.KhachHangView"
+﻿<UserControl x:Class="QLKS.Views.CustomerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -42,7 +42,15 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Margin="0,0,10,0">
                             <TextBlock Text="Địa Chỉ" FontWeight="SemiBold" Foreground="#A9A9B8" Margin="0,0,0,5"/>
-                            <TextBox Text="{Binding SelectedKhachHang.DiaChi, UpdateSourceTrigger=PropertyChanged}" Height="35" Background="#1E1E2E" Foreground="White" BorderBrush="#2B3553" VerticalContentAlignment="Center" Padding="5"/>
+                            <ComboBox   IsEditable="True" 
+                                        Text="{Binding SelectedKhachHang.DiaChi, UpdateSourceTrigger=PropertyChanged}" 
+                                        Height="35" Foreground="Black" VerticalContentAlignment="Center" Padding="5">
+                                <ComboBoxItem Content="TP. Hồ Chí Minh"/>
+                                <ComboBoxItem Content="Bến Tre"/>
+                                <ComboBoxItem Content="Hà Nội"/>
+                                <ComboBoxItem Content="Đà Nẵng"/>
+                                <ComboBoxItem Content="Cần Thơ"/>
+                            </ComboBox>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="10,0,0,0">
                             <TextBlock Text="Email" FontWeight="SemiBold" Foreground="#A9A9B8" Margin="0,0,0,5"/>

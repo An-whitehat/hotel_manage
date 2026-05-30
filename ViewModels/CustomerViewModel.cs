@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace QLKS.ViewModels
 {
-    public class KhachHangViewModel : BaseViewModel
+    public class CustomerViewModel : BaseViewModel
     {
         private HotelManagementEntities db = new HotelManagementEntities();
 
@@ -33,12 +33,12 @@ namespace QLKS.ViewModels
                 System.Windows.Input.CommandManager.InvalidateRequerySuggested();
             }
         }
-        ICommand AddCommand { get; set; }
+        public ICommand AddCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand ClearCommand { get; set; }
 
-        public KhachHangViewModel()
+        public CustomerViewModel()
         {
             LoadData();
             ClearForm();

@@ -8,7 +8,7 @@
         Title="MainWindow" Height="750" Width="1100" WindowStartupLocation="CenterScreen">
 
     <Grid Background="#F8F9FA">
-        <views:KhachHangView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <views:CustomerView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 
 </Window>
