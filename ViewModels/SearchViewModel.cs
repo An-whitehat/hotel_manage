@@ -1,10 +1,12 @@
-﻿using QLKS.Models;
+﻿using QLKS.Commands;
+using QLKS.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace QLKS.ViewModels
 {
@@ -28,7 +30,7 @@ namespace QLKS.ViewModels
             get => _listKhachHang;
             set { _listKhachHang = value; OnPropertyChanged(); }
         }
-
+        public ICommand ResetCommand => new RelayCommand(_ => { SearchText = string.Empty; });
         // Đây chính là đoạn code bạn vừa hỏi, nhưng được đặt vào hàm thực thi
         void ExecuteSearch()
         {

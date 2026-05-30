@@ -85,6 +85,14 @@ namespace QLKS.ViewModels
                 case "Room":
                     NavigateTo(page, "Quản lý phòng", new RoomViewModel());
                     break;
+                case "Revenue":
+                    if (!IsAdmin)
+                    {
+                        MessageBox.Show("Chỉ Admin hoặc Quản lý mới xem được.", "Phân quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    NavigateTo(page, "Thống kê doanh thu", new BaoCaoViewModel());
+                    break;
                 default:
                     break;
             }

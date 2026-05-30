@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace QLKS.Views
 {
-    public partial class BookingView : UserControl
+    public partial class RoomView : UserControl
     {
-        public BookingView()
+        public RoomView()
         {
             InitializeComponent();
         }

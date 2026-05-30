@@ -102,9 +102,27 @@ namespace QLKS.ViewModels
             });
 
             EditLoaiPhongCmd = new RelayCommand(p => {
+                if (SelectedLoaiPhong == null) return;
+
+                SelectedLoaiPhong.TenLoaiPhong = TenLoaiPhong;
+                SelectedLoaiPhong.GiaPhong = GiaPhong;
+                SelectedLoaiPhong.SoGiuong = SoGiuong;
+                SelectedLoaiPhong.MoTa = MoTaLoaiPhong;
+
                 _db.SaveChanges();
                 MessageBox.Show("Cập nhật loại phòng thành công!");
             }, p => SelectedLoaiPhong != null);
+
+            EditDichVuCmd = new RelayCommand(p => {
+                if (SelectedDichVu == null) return;
+
+                SelectedDichVu.TenDichVu = TenDichVu;
+                SelectedDichVu.GiaDichVu = GiaDichVu;
+                SelectedDichVu.MoTa = MoTaDichVu;
+
+                _db.SaveChanges();
+                MessageBox.Show("Cập nhật dịch vụ thành công!");
+            }, p => SelectedDichVu != null);
 
             DeleteLoaiPhongCmd = new RelayCommand(p => {
                 if (MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.Yes)

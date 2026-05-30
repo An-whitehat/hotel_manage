@@ -1,5 +1,6 @@
 using System.Windows;
 using QLKS.ViewModels;
+using QLKS.Views;
 
 namespace QLKS
 {

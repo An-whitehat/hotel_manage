@@ -76,6 +76,14 @@ namespace QLKS.ViewModels
             });
 
             EditPhongCmd = new RelayCommand(p => {
+                if (SelectedPhong == null) return;
+
+                // Gán giá trị từ form vào entity đang được EF track
+                SelectedPhong.SoPhong = SoPhong;
+                SelectedPhong.MaLoaiPhong = SelectedLoaiPhong?.MaLoaiPhong ?? SelectedPhong.MaLoaiPhong;
+                SelectedPhong.TrangThai = TrangThai;
+                SelectedPhong.GhiChu = GhiChu;
+
                 _db.SaveChanges();
                 MessageBox.Show("Cập nhật thông tin phòng thành công!");
             }, p => SelectedPhong != null);

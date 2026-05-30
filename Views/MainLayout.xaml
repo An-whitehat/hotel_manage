@@ -1,9 +1,11 @@
-﻿<Window x:Class="QLKS.Views.MainLayout"
+<Window x:Class="QLKS.Views.MainLayout"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:QLKS.ViewModels"
+        xmlns:views="clr-namespace:QLKS.Views"
+        xmlns:local="clr-namespace:QLKS"
         mc:Ignorable="d"
         Title="Happy Hotel" Height="680" Width="1100"
         WindowStartupLocation="CenterScreen"
@@ -13,6 +15,29 @@
     </Window.DataContext>
 
     <Window.Resources>
+        <!-- Ánh xạ các ViewModel sang View tương ứng -->
+        <DataTemplate DataType="{x:Type vm:StaffViewModel}">
+            <local:StaffView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BookingViewModel}">
+            <views:BookingView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FloorPlanViewModel}">
+            <views:FloorPlanViewUC/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SearchViewModel}">
+            <views:SearchView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:InvoiceCheckoutViewModel}">
+            <local:InvoiceCheckoutView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BaoCaoViewModel}">
+            <views:BaoCaoView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RoomViewModel}">
+            <views:RoomView/>
+        </DataTemplate>
+
         <!-- Style nút sidebar -->
         <Style x:Key="SidebarButton" TargetType="Button">
             <Setter Property="Height" Value="44"/>
@@ -107,7 +132,7 @@
                             CommandParameter="Dashboard"/>
                     <Button Content="🛏  Quản lý phòng"
                             Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
+                            Command="{Binding NavigateCommand}" 
                             CommandParameter="Room"/>
                     <Button Content="🗺  Sơ đồ phòng"
                             Style="{StaticResource SidebarButton}"
@@ -185,7 +210,7 @@
 
             <!-- Content area -->
             <Border Grid.Row="1" Padding="20">
-                <ContentControl Content="{Binding CurrentView}"/>
+                <ContentControl Content="{Binding CurrentViewModel}"/>
             </Border>
         </Grid>
     </Grid>
