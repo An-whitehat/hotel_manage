@@ -43,7 +43,6 @@
     <Reference Include="EPPlus, Version=5.8.14.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>packages\EPPlus.5.8.14\lib\net45\EPPlus.dll</HintPath>
     </Reference>
-
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.10.0.3\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -239,6 +238,8 @@
     <Compile Include="ViewModels\BookingViewModel.cs" />
     <Compile Include="ViewModels\InvoiceCheckoutViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\PrintEmployeeViewModel.cs" />
+    <Compile Include="ViewModels\PrintGuestViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StaffViewModel.cs" />
     <Compile Include="Views\BaoCaoView.xaml.cs">
@@ -255,6 +256,15 @@
     </Compile>
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintEmployeeListView.xaml.cs">
+      <DependentUpon>PrintEmployeeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintGuestListView.xaml.cs">
+      <DependentUpon>PrintGuestListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintMainView.xaml.cs">
+      <DependentUpon>PrintMainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StaffView.xaml.cs">
       <DependentUpon>StaffView.xaml</DependentUpon>
@@ -307,6 +317,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintEmployeeListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintGuestListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintMainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
