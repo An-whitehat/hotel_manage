@@ -8,6 +8,7 @@ using System.Windows.Input;
 using QLKS.Commands;
 using QLKS.Models;
 using QLKS.Helpers;
+using System.Windows;
 namespace QLKS.ViewModels
 {
     public class ExportExcelViewModel : BaseViewModel
@@ -25,12 +26,32 @@ namespace QLKS.ViewModels
                 dt.Columns.Add("Loại Hóa Đơn");
                 dt.Columns.Add("Ghi Chú");
 
-                var listInvoices = _db.HoaDons.ToList();
+                var listInvoices = _db.HoaDons.Select(x => new
+                   {
+                       x.MaHoaDon,
+                       x.NgayLap,
+                       x.TongTien,
+                       x.LoaiHoaDon,
+                       x.GhiChu
+                   })
+                   .ToList();
                 foreach (var item in listInvoices)
                 {
-                    dt.Rows.Add(item.MaHoaDon, item.NgayLap, item.TongTien, item.LoaiHoaDon, item.GhiChu);
+                    dt.Rows.Add(
+                        item.MaHoaDon,
+                        item.NgayLap,
+                        item.TongTien,
+                        item.LoaiHoaDon,
+                        item.GhiChu);
                 }
-                ExcelExporter.ExportToExcel(dt, "Báo cáo tổng kết hóa đơn khách sạn", "DanhSachHoaDon");
+                try
+                {
+                    ExcelExporter.ExportToExcel(dt, "Báo cáo tổng kết hóa đơn khách sạn", "DanhSachHoaDon");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             });
         }
     }

@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using QLKS.Models;
 using QLKS.Commands;
-using System.Net.NetworkInformation;
+//using System.Net.NetworkInformation;
 
 namespace QLKS.ViewModels
 {
@@ -63,13 +63,27 @@ namespace QLKS.ViewModels
 
             AddPhongCmd = new RelayCommand(p => {
                 if (!ListLoaiPhongCombo.Any()) return;
+                //var pNew = new Phong
+                //{
+                //    SoPhong = "Pxxx",
+                //    MaLoaiPhong = ListLoaiPhongCombo.First().MaLoaiPhong,
+                //    TrangThai = "Trống",
+                //    NgayTao = System.DateTime.Now
+                //};
+                if (_db.Phongs.Any(x => x.SoPhong == SoPhong))
+                {
+                    MessageBox.Show("Số phòng đã tồn tại!");
+                    return;
+                }
                 var pNew = new Phong
                 {
-                    SoPhong = "Pxxx",
-                    MaLoaiPhong = ListLoaiPhongCombo.First().MaLoaiPhong,
-                    TrangThai = "Trống",
-                    NgayTao = System.DateTime.Now
+                    SoPhong = SoPhong,
+                    MaLoaiPhong = SelectedLoaiPhong.MaLoaiPhong,
+                    TrangThai = TrangThai,
+                    GhiChu = GhiChu,
+                    NgayTao = DateTime.Now
                 };
+
                 _db.Phongs.Add(pNew);
                 _db.SaveChanges();
                 ListPhong.Add(pNew);
@@ -91,9 +105,16 @@ namespace QLKS.ViewModels
             DeletePhongCmd = new RelayCommand(p => {
                 if (MessageBox.Show("Xóa phòng này?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    _db.Phongs.Remove(SelectedPhong);
+                    var item = SelectedPhong;
+
+                    _db.Phongs.Remove(item);
                     _db.SaveChanges();
-                    ListPhong.Remove(SelectedPhong);
+
+                    ListLoaiPhong.Remove(item);
+
+                    //_db.Phongs.Remove(SelectedPhong);
+                    //_db.SaveChanges();
+                    //ListPhong.Remove(SelectedPhong);
                 }
             }, p => SelectedPhong != null);
         }

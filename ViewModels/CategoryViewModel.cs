@@ -95,7 +95,15 @@ namespace QLKS.ViewModels
 
             // Khởi tạo các Command CRUD Loại Phòng
             AddLoaiPhongCmd = new RelayCommand(p => {
-                var lp = new LoaiPhong { TenLoaiPhong = "Loại phòng mới", GiaPhong = 0, SoGiuong = 2, NgayTao = System.DateTime.Now };
+                //var lp = new LoaiPhong { TenLoaiPhong = "Loại phòng mới", GiaPhong = 0, SoGiuong = 2, NgayTao = System.DateTime.Now };
+                var lp = new LoaiPhong
+                {
+                    TenLoaiPhong = TenLoaiPhong,
+                    GiaPhong = GiaPhong,
+                    SoGiuong = SoGiuong,
+                    MoTa = MoTaLoaiPhong,
+                    NgayTao = DateTime.Now
+                };
                 _db.LoaiPhongs.Add(lp);
                 _db.SaveChanges();
                 ListLoaiPhong.Add(lp);
@@ -127,30 +135,51 @@ namespace QLKS.ViewModels
             DeleteLoaiPhongCmd = new RelayCommand(p => {
                 if (MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    _db.LoaiPhongs.Remove(SelectedLoaiPhong);
+                    if (_db.Phongs.Any(x => x.MaLoaiPhong == SelectedLoaiPhong.MaLoaiPhong))
+                    {
+                        MessageBox.Show("Loại phòng đang được sử dụng!");
+                        return;
+                    }
+                    var item = SelectedLoaiPhong;
+
+                    _db.LoaiPhongs.Remove(item);
                     _db.SaveChanges();
-                    ListLoaiPhong.Remove(SelectedLoaiPhong);
+
+                    ListLoaiPhong.Remove(item);
+
+                    //_db.LoaiPhongs.Remove(SelectedLoaiPhong);
+                    //_db.SaveChanges();
+                    //ListLoaiPhong.Remove(SelectedLoaiPhong);
                 }
             }, p => SelectedLoaiPhong != null);
 
             AddDichVuCmd = new RelayCommand(p => {
-                var dv = new DichVu { TenDichVu = "Dịch vụ mới", GiaDichVu = 0, NgayTao = System.DateTime.Now };
+                //var dv = new DichVu { TenDichVu = "Dịch vụ mới", GiaDichVu = 0, NgayTao = System.DateTime.Now };
+                var dv = new DichVu
+                {
+                    TenDichVu = TenDichVu,
+                    GiaDichVu = GiaDichVu,
+                    MoTa = MoTaDichVu,
+                    NgayTao = DateTime.Now
+                };
                 _db.DichVus.Add(dv);
                 _db.SaveChanges();
                 ListDichVu.Add(dv);
             });
 
-            EditDichVuCmd = new RelayCommand(p => {
-                _db.SaveChanges();
-                MessageBox.Show("Cập nhật dịch vụ thành công!");
-            }, p => SelectedDichVu != null);
-
             DeleteDichVuCmd = new RelayCommand(p => {
                 if (MessageBox.Show("Bạn có chắc muốn xóa dịch vụ này?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    _db.DichVus.Remove(SelectedDichVu);
+                    var item = SelectedDichVu;
+
+                    _db.DichVus.Remove(item);
                     _db.SaveChanges();
-                    ListDichVu.Remove(SelectedDichVu);
+
+                    ListLoaiPhong.Remove(item);
+
+                    //_db.DichVus.Remove(SelectedDichVu);
+                    //_db.SaveChanges();
+                    //ListDichVu.Remove(SelectedDichVu);
                 }
             }, p => SelectedDichVu != null);
         }
