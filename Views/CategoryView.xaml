@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="QLKS.Views.CategoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QLKS.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:CategoryViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Margin="20">
+        <TabControl Background="#1a1a1e" BorderBrush="#2d2d34">
+            <TabItem Header="Danh Mục Loại Phòng" Width="180" Height="35" Foreground="White">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column0="0" Margin="10" Background="#24242b" Padding="15">
+                        <TextBlock Text="THÔNG TIN LOẠI PHÒNG" Foreground="#4fc3f7" FontWeight="Bold" FontSize="16" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Tên Loại Phòng:" Foreground="DarkGray" Margin="0,5"/>
+                        <TextBox Text="{Binding TenLoaiPhong, UpdateSourceTrigger=PropertyChanged}" Background="#1a1a1e" Foreground="White" BorderBrush="#3f3f46" Padding="5" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Giá Phòng (VNĐ):" Foreground="DarkGray" Margin="0,5"/>
+                        <TextBox Text="{Binding GiaPhong, UpdateSourceTrigger=PropertyChanged}" Background="#1a1a1e" Foreground="White" BorderBrush="#3f3f46" Padding="5" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Số Giường:" Foreground="DarkGray" Margin="0,5"/>
+                        <TextBox Text="{Binding SoGiuong, UpdateSourceTrigger=PropertyChanged}" Background="#1a1a1e" Foreground="White" BorderBrush="#3f3f46" Padding="5" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Mô Tả:" Foreground="DarkGray" Margin="0,5"/>
+                        <TextBox Text="{Binding MoTaLoaiPhong, UpdateSourceTrigger=PropertyChanged}" Height="60" TextWrapping="Wrap" AcceptsReturn="True" Background="#1a1a1e" Foreground="White" BorderBrush="#3f3f46" Padding="5" Margin="0,0,0,20"/>
+
+                        <UniformGrid Columns="3" Height="40">
+                            <Button Content="Thêm" Command="{Binding AddLoaiPhongCmd}" Background="#2e7d32" Foreground="White" Margin="2" BorderThickness="0"/>
+                            <Button Content="Sửa" Command="{Binding EditLoaiPhongCmd}" Background="#1565c0" Foreground="White" Margin="2" BorderThickness="0"/>
+                            <Button Content="Xóa" Command="{Binding DeleteLoaiPhongCmd}" Background="#c62828" Foreground="White" Margin="2" BorderThickness="0"/>
+                        </UniformGrid>
+                    </StackPanel>
+
+                    <DataGrid Grid.Column="1" Margin="10" AutoGenerateColumns="False" 
+                              ItemsSource="{Binding ListLoaiPhong}" SelectedItem="{Binding SelectedLoaiPhong}"
+                              Background="#1a1a1e" RowBackground="#24242b" AlternatingRowBackground="#1e1e24" 
+                              Foreground="White" BorderBrush="#3f3f46" IsReadOnly="True" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Mã" Binding="{Binding MaLoaiPhong}" Width="50"/>
+                            <DataGridTextColumn Header="Tên Loại Phòng" Binding="{Binding TenLoaiPhong}" Width="*"/>
+                            <DataGridTextColumn Header="Giá Phòng" Binding="{Binding GiaPhong, StringFormat={}{0:N0} VNĐ}" Width="150"/>
+                            <DataGridTextColumn Header="Số Giường" Binding="{Binding SoGiuong}" Width="80"/>
+                            <DataGridTextColumn Header="Mô Tả" Binding="{Binding MoTa}" Width="1.5*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Danh Mục Dịch Vụ" Width="180" Height="35" Foreground="White">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="10" Background="#24242b" Padding="15">
+                        <TextBlock Text="THÔNG TIN DỊCH VỤ" Foreground="#4fc3f7" FontWeight="Bold" FontSize="16" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Tên Dịch Vụ:" Foreground="DarkGray" Margin="0,5"/>
+                        <TextBox Text="{Binding TenDichVu, UpdateSourceTrigger=PropertyChanged}" Background="#1a1a1e" Foreground="White" BorderBrush="#3f3f46" Padding="5" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Giá Dịch Vụ:" Foreground="DarkGray" Margin="0,5"/>
+                        <TextBox Text="{Binding GiaDichVu, UpdateSourceTrigger=PropertyChanged}" Background="#1a1a1e" Foreground="White" BorderBrush="#3f3f46" Padding="5" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Mô Tả:" Foreground="DarkGray" Margin="0,5"/>
+                        <TextBox Text="{Binding MoTaDichVu, UpdateSourceTrigger=PropertyChanged}" Height="80" TextWrapping="Wrap" Background="#1a1a1e" Foreground="White" BorderBrush="#3f3f46" Padding="5" Margin="0,0,0,20"/>
+
+                        <UniformGrid Columns="3" Height="40">
+                            <Button Content="Thêm" Command="{Binding AddDichVuCmd}" Background="#2e7d32" Foreground="White" Margin="2" BorderThickness="0"/>
+                            <Button Content="Sửa" Command="{Binding EditDichVuCmd}" Background="#1565c0" Foreground="White" Margin="2" BorderThickness="0"/>
+                            <Button Content="Xóa" Command="{Binding DeleteDichVuCmd}" Background="#c62828" Foreground="White" Margin="2" BorderThickness="0"/>
+                        </UniformGrid>
+                    </StackPanel>
+
+                    <DataGrid Grid.Column="1" Margin="10" AutoGenerateColumns="False" 
+                              ItemsSource="{Binding ListDichVu}" SelectedItem="{Binding SelectedDichVu}"
+                              Background="#1a1a1e" RowBackground="#24242b" AlternatingRowBackground="#1e1e24" 
+                              Foreground="White" BorderBrush="#3f3f46" IsReadOnly="True" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Mã DV" Binding="{Binding MaDichVu}" Width="60"/>
+                            <DataGridTextColumn Header="Tên Dịch Vụ" Binding="{Binding TenDichVu}" Width="*"/>
+                            <DataGridTextColumn Header="Giá Dịch Vụ" Binding="{Binding GiaDichVu, StringFormat={}{0:N0} VNĐ}" Width="150"/>
+                            <DataGridTextColumn Header="Mô Tả" Binding="{Binding MoTa}" Width="2*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
