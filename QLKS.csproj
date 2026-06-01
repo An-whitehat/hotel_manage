@@ -247,6 +247,9 @@
     <Compile Include="Views\BookingView.xaml.cs">
       <DependentUpon>BookingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CustomerView.xaml.cs">
+      <DependentUpon>CustomerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InvoiceCheckoutView.xaml.cs">
       <DependentUpon>InvoiceCheckoutView.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,7 @@
       <DependentUpon>StaffView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\ExportExcelViewModel.cs" />
     <Compile Include="ViewModels\FloorPlanViewModel.cs" />
     <Compile Include="ViewModels\InvoiceImportViewModel.cs" />
@@ -295,6 +299,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CustomerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

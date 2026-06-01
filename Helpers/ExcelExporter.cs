@@ -17,8 +17,7 @@ namespace QLKS.Helpers
         public static void ExportToExcel(DataTable dataTable, string titleName, string sheetName)
         {
             // Cấu hình EPPlus sử dụng phi thương mại
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
+            ExcelPackage.License.SetNonCommercialPersonal("Tên Của M");
             SaveFileDialog sfd = new SaveFileDialog
             {
                 Filter = "Excel Workbook (*.xlsx)|*.xlsx",
