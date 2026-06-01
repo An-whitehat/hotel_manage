@@ -60,27 +60,68 @@ namespace QLKS.ViewModels
             ListPhong = new ObservableCollection<Phong>(_db.Phongs.ToList());
             ListLoaiPhongCombo = new ObservableCollection<LoaiPhong>(_db.LoaiPhongs.ToList());
             ListTrangThai = new ObservableCollection<string> { "Trống", "Đang thuê", "Đang dọn", "Bảo trì" };
+            SelectedLoaiPhong = ListLoaiPhongCombo.FirstOrDefault();
 
             AddPhongCmd = new RelayCommand(p => {
-                if (!ListLoaiPhongCombo.Any()) return;
+                var soPhong = SoPhong?.Trim();
+                if (string.IsNullOrWhiteSpace(soPhong))
+                {
+                    MessageBox.Show("Vui lòng nhập số phòng.");
+                    return;
+                }
+
+                if (SelectedLoaiPhong == null)
+                {
+                    MessageBox.Show("Vui lòng chọn loại phòng.");
+                    return;
+                }
+
+                if (_db.Phongs.Any(x => x.SoPhong == soPhong))
+                {
+                    MessageBox.Show("Số phòng đã tồn tại. Vui lòng nhập số phòng khác.");
+                    return;
+                }
+
                 var pNew = new Phong
                 {
-                    SoPhong = "Pxxx",
-                    MaLoaiPhong = ListLoaiPhongCombo.First().MaLoaiPhong,
-                    TrangThai = "Trống",
-                    NgayTao = System.DateTime.Now
+                    SoPhong = soPhong,
+                    MaLoaiPhong = SelectedLoaiPhong.MaLoaiPhong,
+                    TrangThai = string.IsNullOrWhiteSpace(TrangThai) ? "Trống" : TrangThai,
+                    GhiChu = GhiChu,
+                    NgayTao = DateTime.Now
                 };
+
                 _db.Phongs.Add(pNew);
                 _db.SaveChanges();
                 ListPhong.Add(pNew);
+                SelectedPhong = pNew;
+                MessageBox.Show("Thêm phòng thành công!");
             });
 
             EditPhongCmd = new RelayCommand(p => {
                 if (SelectedPhong == null) return;
+                var soPhong = SoPhong?.Trim();
+                if (string.IsNullOrWhiteSpace(soPhong))
+                {
+                    MessageBox.Show("Vui lòng nhập số phòng.");
+                    return;
+                }
+
+                if (SelectedLoaiPhong == null)
+                {
+                    MessageBox.Show("Vui lòng chọn loại phòng.");
+                    return;
+                }
+
+                if (_db.Phongs.Any(x => x.SoPhong == soPhong && x.MaPhong != SelectedPhong.MaPhong))
+                {
+                    MessageBox.Show("Số phòng đã tồn tại. Vui lòng nhập số phòng khác.");
+                    return;
+                }
 
                 // Gán giá trị từ form vào entity đang được EF track
-                SelectedPhong.SoPhong = SoPhong;
-                SelectedPhong.MaLoaiPhong = SelectedLoaiPhong?.MaLoaiPhong ?? SelectedPhong.MaLoaiPhong;
+                SelectedPhong.SoPhong = soPhong;
+                SelectedPhong.MaLoaiPhong = SelectedLoaiPhong.MaLoaiPhong;
                 SelectedPhong.TrangThai = TrangThai;
                 SelectedPhong.GhiChu = GhiChu;
 

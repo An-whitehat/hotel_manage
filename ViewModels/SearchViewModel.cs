@@ -1,4 +1,4 @@
-﻿using QLKS.Commands;
+using QLKS.Commands;
 using QLKS.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,11 @@ namespace QLKS.ViewModels
 {
     public class SearchViewModel:BaseViewModel
     {
+        public SearchViewModel()
+        {
+            ExecuteSearch();
+        }
+
         private string _searchText;
         public string SearchText
         {
@@ -40,7 +45,10 @@ namespace QLKS.ViewModels
             // 2. Kiểm tra nếu có nhập từ khóa thì mới lọc
             if (!string.IsNullOrEmpty(SearchText))
             {
-                query = query.Where(x => x.HoTen.Contains(SearchText) || x.SDT.Contains(SearchText));
+                query = query.Where(x => x.HoTen.Contains(SearchText) 
+                                      || x.SDT.Contains(SearchText) 
+                                      || x.CCCD.Contains(SearchText) 
+                                      || x.DiaChi.Contains(SearchText));
             }
 
             // 3. Đẩy kết quả ra View

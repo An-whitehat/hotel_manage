@@ -62,7 +62,7 @@
                     <!-- Bảo trì / Dọn -->
                     <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
                         <Border Width="14" Height="14" CornerRadius="3"
-                                Background="#F39C12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                Background="Gray" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBlock VerticalAlignment="Center" FontSize="13" Foreground="#555">
                             <Run Text="Bảo trì/Dọn ("/><Run Text="{Binding SoPhongBaoTri}"/><Run Text=")"/>
                         </TextBlock>

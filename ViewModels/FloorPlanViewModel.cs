@@ -24,6 +24,7 @@ namespace QLKS.ViewModels
                 switch (TrangThai)
                 {
                     case "Trống": return "#2ECC71";  // xanh lá
+                    case "Đang thuê":
                     case "Đang sử dụng": return "#E74C3C";  // đỏ
                     case "Đang dọn": return "#F39C12";  // cam
                     case "Bảo trì": return "#95A5A6";  // xám
@@ -133,7 +134,7 @@ namespace QLKS.ViewModels
 
             // Cập nhật thống kê
             SoPhongTrong = displayList.Count(p => p.TrangThai == "Trống");
-            SoPhongDangDung = displayList.Count(p => p.TrangThai == "Đang sử dụng");
+            SoPhongDangDung = displayList.Count(p => p.TrangThai == "Đang thuê" || p.TrangThai == "Đang sử dụng");
             SoPhongBaoTri = displayList.Count(p => p.TrangThai == "Bảo trì" || p.TrangThai == "Đang dọn");
         }
 

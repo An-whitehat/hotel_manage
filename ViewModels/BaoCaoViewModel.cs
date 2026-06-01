@@ -1,5 +1,6 @@
-﻿using QLKS.Commands;
+using QLKS.Commands;
 using QLKS.Services;
+using QLKS.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -176,36 +177,29 @@ namespace QLKS.ViewModels
         // ── Xuất Excel ───────────────────────────────────────────────────────
         private void XuatExcel()
         {
-            // Gọi ExcelExporter nếu team đã có, hoặc dùng CSV đơn giản
             try
             {
-                var saveDialog = new Microsoft.Win32.SaveFileDialog
-                {
-                    Filter = "Excel Files|*.xlsx",
-                    FileName = $"BaoCao_DoanhThu_{TuNgay:yyyyMMdd}_{DenNgay:yyyyMMdd}.xlsx"
-                };
-                if (saveDialog.ShowDialog() != true) return;
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Loại phòng", typeof(string));
+                dt.Columns.Add("Số phòng", typeof(int));
+                dt.Columns.Add("Số lượt đặt", typeof(int));
+                dt.Columns.Add("Tổng ngày thuê", typeof(int));
+                dt.Columns.Add("Doanh thu (VNĐ)", typeof(decimal));
+                dt.Columns.Add("Tỷ lệ (%)", typeof(decimal));
 
-                // Dùng ExcelExporter của team (Helpers/ExcelExporter.cs)
-                // ExcelExporter.Export(DanhSachBaoCao.ToList(), saveDialog.FileName);
-
-                // Nếu chưa có ExcelExporter, xuất CSV tạm:
-                var sb = new System.Text.StringBuilder();
-                sb.AppendLine("Loại phòng,Số phòng,Số lượt đặt,Tổng ngày thuê,Doanh thu,Tỷ lệ (%)");
                 foreach (var row in DanhSachBaoCao)
-                    sb.AppendLine($"{row.TenLoaiPhong},{row.SoPhong},{row.SoLuotDat},{row.TongNgayThue},{row.DoanhThu},{row.TyLe}");
-                sb.AppendLine($"TỔNG,,{TongLuotDat},,{TongDoanhThu},100");
+                {
+                    dt.Rows.Add(row.TenLoaiPhong, row.SoPhong, row.SoLuotDat, row.TongNgayThue, row.DoanhThu, row.TyLe);
+                }
 
-                System.IO.File.WriteAllText(
-                    System.IO.Path.ChangeExtension(saveDialog.FileName, ".csv"),
-                    sb.ToString(),
-                    System.Text.Encoding.UTF8);
+                // Dòng tổng
+                dt.Rows.Add("TỔNG CỘNG", DBNull.Value, TongLuotDat, DBNull.Value, TongDoanhThu, 100);
 
-                MessageBox.Show("Đã xuất file thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                ExcelExporter.ExportToExcel(dt, $"Báo cáo doanh thu theo loại phòng (Từ {TuNgay:dd/MM/yyyy} đến {DenNgay:dd/MM/yyyy})", $"DoanhThuPhong");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi xuất file: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Lỗi xuất file Excel: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
