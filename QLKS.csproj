@@ -278,6 +278,7 @@
     <Compile Include="ViewModels\FloorPlanViewModel.cs" />
     <Compile Include="ViewModels\InvoiceImportViewModel.cs" />
     <Compile Include="ViewModels\MainLayoutViewModel.cs" />
+    <Compile Include="ViewModels\RevenueViewModel.cs" />
     <Compile Include="ViewModels\RoomViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="Views\FloorPlanViewUC.xaml.cs">
@@ -285,6 +286,9 @@
     </Compile>
     <Compile Include="Views\MainLayout.xaml.cs">
       <DependentUpon>MainLayout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RevenueView.xaml.cs">
+      <DependentUpon>RevenueView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
@@ -351,6 +355,10 @@
     <Page Include="Views\MainLayout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RevenueView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SearchView.xaml">
       <Generator>MSBuild:Compile</Generator>
