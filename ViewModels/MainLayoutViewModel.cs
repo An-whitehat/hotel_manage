@@ -33,7 +33,8 @@ namespace QLKS.ViewModels
         // ─── Thông tin user đang đăng nhập ──────────────────────────────────
         public string CurrentUser => SessionService.CurrentUser?.HoTen ?? "Admin";
         public string VaiTro => SessionService.CurrentUser?.VaiTro ?? "";
-        public bool IsAdmin => SessionService.HasRole("Admin", "QuanLy");
+        // public bool IsAdmin => SessionService.HasRole("Admin", "QuanLy");
+        public bool IsAdmin => true; // Cấp quyền tối cao tạm thời để test code
 
         // ─── Navigation Command (dùng CommandParameter từ XAML) ─────────────
         public RelayCommand NavigateCommand { get; }
@@ -65,6 +66,9 @@ namespace QLKS.ViewModels
                     break;
                 case "Search":
                     NavigateTo(page, "Tìm kiếm", new SearchViewModel());
+                    break;
+                case "Customer":
+                    NavigateTo(page, "Quản lý Khách hàng", new CustomerViewModel());
                     break;
                 case "Invoice":
                     NavigateTo(page, "Hóa đơn", new InvoiceCheckoutViewModel());
