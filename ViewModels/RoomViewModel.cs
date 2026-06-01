@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using QLKS.Models;
 using QLKS.Commands;
-using System.Net.NetworkInformation;
+//using System.Net.NetworkInformation;
 
 namespace QLKS.ViewModels
 {
@@ -132,9 +132,16 @@ namespace QLKS.ViewModels
             DeletePhongCmd = new RelayCommand(p => {
                 if (MessageBox.Show("Xóa phòng này?", "Cảnh báo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    _db.Phongs.Remove(SelectedPhong);
+                    var item = SelectedPhong;
+
+                    _db.Phongs.Remove(item);
                     _db.SaveChanges();
-                    ListPhong.Remove(SelectedPhong);
+
+                    ListPhong.Remove(item);
+
+                    //_db.Phongs.Remove(SelectedPhong);
+                    //_db.SaveChanges();
+                    //ListPhong.Remove(SelectedPhong);
                 }
             }, p => SelectedPhong != null);
         }

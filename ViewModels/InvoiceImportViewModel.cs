@@ -54,6 +54,8 @@ namespace QLKS.ViewModels
             });
 
             AddItemToInvoiceCmd = new RelayCommand(p => {
+                if (SelectedDichVu == null)
+                    return;
                 decimal itemPrice = SelectedDichVu.GiaDichVu;
                 decimal totalItem = itemPrice * QuantityToImport;
 
@@ -111,7 +113,10 @@ namespace QLKS.ViewModels
                 LoaiHoaDon = "Nhap",
                 GhiChu = ""
             };
-            CurrentDetails.Clear();
+            if (CurrentDetails != null)
+            {
+                CurrentDetails.Clear();
+            }
         }
 
         private void UpdateInvoiceTotal()
