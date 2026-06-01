@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="QLKS.Views.PrintMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:QLKS.Views" 
+             Background="#F3F4F6">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="HỆ THỐNG IN BÁO CÁO" FontSize="28" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+
+        <TabControl Grid.Row="1" Background="Transparent" BorderThickness="0">
+
+            <TabItem Header="Khách Đang Lưu Trú" Padding="20,10" FontSize="16" FontWeight="SemiBold">
+                <Grid Background="White" Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Content="🖨️ IN DANH SÁCH KHÁCH" HorizontalAlignment="Right" Padding="15,10" Margin="10" Background="#EC4899" Foreground="White" FontWeight="Bold" Cursor="Hand" Click="PrintGuest_Click"/>
+
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <Viewbox Stretch="Uniform" Height="500" Margin="20">
+                            <views:PrintGuestListView x:Name="GuestReport"/>
+                        </Viewbox>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Nhân Viên &amp; Ca Làm" Padding="20,10" FontSize="16" FontWeight="SemiBold">
+                <Grid Background="White" Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Content="🖨️ IN LỊCH LÀM VIỆC" HorizontalAlignment="Right" Padding="15,10" Margin="10" Background="#6366F1" Foreground="White" FontWeight="Bold" Cursor="Hand" Click="PrintEmployee_Click"/>
+
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <Viewbox Stretch="Uniform" Height="500" Margin="20">
+                            <views:PrintEmployeeListView x:Name="EmployeeReport"/>
+                        </Viewbox>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</UserControl>
