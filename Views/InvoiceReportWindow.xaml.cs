@@ -149,41 +149,16 @@ namespace QLKS.Views
 
         // ════════════════════════════════════════════════════════════════════
         //  TAB 2 — Crystal Reports
+        //  HoaDonThanhToan.rpt chưa được team hoàn thiện (đang là stub).
+        //  Tab này sẽ hiển thị thông báo chờ đến khi .rpt có đủ fields.
         // ════════════════════════════════════════════════════════════════════
         private void BtnLoadCrystal_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                TxtCrystalStatus.Text = "Đang tải...";
-
-                // Đọc connection string từ App.config (không hardcode)
-                var connStr = ConfigurationManager.ConnectionStrings["HotelManagementDB"]?.ConnectionString
-                              ?? "Data Source=.;Initial Catalog=HotelManagement;Integrated Security=True";
-
-                // Parse server và database từ connection string
-                var builder = new System.Data.SqlClient.SqlConnectionStringBuilder(connStr);
-                string server   = builder.DataSource;
-                string database = builder.InitialCatalog;
-
-                var rpt = new HoaDonThanhToan();
-
-                // Dùng Integrated Security → không cần user/pass
-                // Nếu SQL Auth thì thay bằng: rpt.SetDatabaseLogon("user", "pass", server, database)
-                rpt.SetDatabaseLogon("", "", server, database);
-
-                // Lọc đúng hóa đơn theo MaHoaDon
-                rpt.RecordSelectionFormula =
-                    $"{{HoaDon.MaHoaDon}} = {_maHoaDon}";
-
-                CrystalViewer.ViewerCore.ReportSource = rpt;
-                TxtCrystalStatus.Text = $"Đã tải hóa đơn #{_maHoaDon}";
-            }
-            catch (Exception ex)
-            {
-                TxtCrystalStatus.Text = "Lỗi: " + ex.Message;
-                MessageBox.Show("Không thể tải Crystal Report:\n" + ex.Message,
-                    "Lỗi Crystal Reports", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            TxtCrystalStatus.Text = "Crystal Report cho hóa đơn chưa sẵn sàng — dùng Tab 'Xem nhanh' để in.";
+            MessageBox.Show(
+                "File HoaDonThanhToan.rpt chưa được thiết kế hoàn chỉnh.\n" +
+                "Vui lòng dùng Tab '🖥 Xem nhanh' để xem và in hóa đơn.",
+                "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // ── In WPF preview ────────────────────────────────────────────────

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:QLKS"
              xmlns:helpers="clr-namespace:QLKS.Helpers"
-             StartupUri="Views/LoginWindow.xaml">
+             StartupUri="Views/MainLayout.xaml">
     <Application.Resources>
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <helpers:PercentToWidthConverter x:Key="PercentToWidthConverter"/>

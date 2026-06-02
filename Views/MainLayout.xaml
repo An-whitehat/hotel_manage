@@ -196,6 +196,9 @@
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
                                 CommandParameter="MyPrintMenu"/>
+                        <Button Content="🖨️  Báo cáo Khách Hàng"
+                                Style="{StaticResource SidebarButton}"
+                                Click="btn_OpenReportKhachHang_Click"/>
                     </StackPanel>
                 </ScrollViewer>
                 <!-- Bottom: user info -->
