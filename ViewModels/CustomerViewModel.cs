@@ -51,8 +51,12 @@ namespace QLKS.ViewModels
 
         private void LoadData()
         {
-            var list = db.KhachHangs.ToList();
-            DanhSachKhachHang = new ObservableCollection<KhachHang>(list);
+            // Tạo context mới mỗi lần load để tránh EF cache dữ liệu cũ
+            using (var freshDb = new HotelManagementEntities())
+            {
+                var list = freshDb.KhachHangs.ToList();
+                DanhSachKhachHang = new ObservableCollection<KhachHang>(list);
+            }
         }
 
         private void ExecuteAdd()
