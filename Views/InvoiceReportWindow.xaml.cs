@@ -1,23 +1,14 @@
 ﻿using QLKS.Models;
-using QLKS.Report;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace QLKS.Views
 {
     /// <summary>
-    /// Interaction logic for InvoiceReportWindow.xaml
+    /// Simple print preview window - replacement for Crystal Reports
     /// </summary>
     public partial class InvoiceReportWindow : Window
     {
@@ -28,46 +19,134 @@ namespace QLKS.Views
             using (var db = new HotelManagementEntities())
             {
                 var data = (from hd in db.HoaDons
-                            join dp in db.DatPhongs
-                                on hd.MaDatPhong equals dp.MaDatPhong
-
-                            join kh in db.KhachHangs
-                                on dp.MaKH equals kh.MaKH
-
-                            join nv in db.NhanViens
-                                on hd.MaNV equals nv.MaNV
-
-                            join p in db.Phongs
-                                on dp.MaPhong equals p.MaPhong
-
-                            join ct in db.ChiTietHoaDons
-                                on hd.MaHoaDon equals ct.MaHoaDon
-
-                            join dv in db.DichVus
-                                on ct.MaDichVu equals dv.MaDichVu
-
+                            join dp in db.DatPhongs on hd.MaDatPhong equals dp.MaDatPhong into dpGroup
+                            from dp in dpGroup.DefaultIfEmpty()
+                            join kh in db.KhachHangs on dp.MaKH equals kh.MaKH into khGroup
+                            from kh in khGroup.DefaultIfEmpty()
+                            join nv in db.NhanViens on hd.MaNV equals nv.MaNV into nvGroup
+                            from nv in nvGroup.DefaultIfEmpty()
+                            join p in db.Phongs on dp.MaPhong equals p.MaPhong into pGroup
+                            from p in pGroup.DefaultIfEmpty()
                             where hd.MaHoaDon == maHoaDon
-
                             select new
                             {
                                 hd.MaHoaDon,
                                 hd.NgayLap,
-                                kh.HoTen,
-                                TenNhanVien = nv.HoTen,
-                                p.SoPhong,
-                                dv.TenDichVu,
-                                ct.SoLuong,
-                                ct.DonGia,
-                                ct.ThanhTien,
-                                hd.TongTien
-                            }).ToList();
+                                HoTenKhachHang = kh != null ? kh.HoTen : "N/A",
+                                TenNhanVien = nv != null ? nv.HoTen : "N/A",
+                                SoPhong = p != null ? p.SoPhong : "N/A",
+                                hd.TongTien,
+                                hd.LoaiHoaDon,
+                                hd.GhiChu
+                            }).FirstOrDefault();
 
-                HoaDonThanhToan rpt =
-                    new HoaDonThanhToan();
+                var chiTiet = (from ct in db.ChiTietHoaDons
+                               join dv in db.DichVus on ct.MaDichVu equals dv.MaDichVu
+                               where ct.MaHoaDon == maHoaDon
+                               select new
+                               {
+                                   dv.TenDichVu,
+                                   ct.SoLuong,
+                                   ct.DonGia,
+                                   ct.ThanhTien
+                               }).ToList();
 
-                rpt.SetDataSource(data);
+                if (data != null)
+                {
+                    // Build simple text preview
+                    var preview = new TextBlock
+                    {
+                        FontFamily = new FontFamily("Consolas"),
+                        FontSize = 14,
+                        Padding = new Thickness(40),
+                        TextWrapping = TextWrapping.Wrap,
+                        Background = Brushes.White
+                    };
 
-                crystalReportViewer.ReportSource = rpt;
+                    var sb = new System.Text.StringBuilder();
+                    sb.AppendLine("═══════════════════════════════════════════════════════");
+                    sb.AppendLine("           KHÁCH SẠN ĐẠT & AN");
+                    sb.AppendLine("              HÓA ĐƠN THANH TOÁN");
+                    sb.AppendLine("═══════════════════════════════════════════════════════");
+                    sb.AppendLine($"Mã hóa đơn:      {data.MaHoaDon}");
+                    sb.AppendLine($"Ngày lập:        {data.NgayLap:dd/MM/yyyy HH:mm}");
+                    sb.AppendLine($"Loại HĐ:         {data.LoaiHoaDon}");
+                    sb.AppendLine($"Khách hàng:      {data.HoTenKhachHang}");
+                    sb.AppendLine($"Nhân viên:       {data.TenNhanVien}");
+                    sb.AppendLine($"Phòng:           {data.SoPhong}");
+                    sb.AppendLine("───────────────────────────────────────────────────────");
+                    sb.AppendLine("CHI TIẾT DỊCH VỤ:");
+                    sb.AppendLine();
+
+                    foreach (var item in chiTiet)
+                    {
+                        sb.AppendLine($"  • {item.TenDichVu}");
+                        sb.AppendLine($"    SL: {item.SoLuong}  |  Đơn giá: {item.DonGia:#,##0} VNĐ  |  Thành tiền: {item.ThanhTien:#,##0} VNĐ");
+                        sb.AppendLine();
+                    }
+
+                    sb.AppendLine("───────────────────────────────────────────────────────");
+                    sb.AppendLine($"TỔNG TIỀN:       {data.TongTien:#,##0} VNĐ");
+                    sb.AppendLine("═══════════════════════════════════════════════════════");
+                    if (!string.IsNullOrEmpty(data.GhiChu))
+                    {
+                        sb.AppendLine($"Ghi chú: {data.GhiChu}");
+                        sb.AppendLine();
+                    }
+                    sb.AppendLine("          Cảm ơn quý khách! Hẹn gặp lại!");
+
+                    preview.Text = sb.ToString();
+
+                    var scrollViewer = new ScrollViewer
+                    {
+                        Content = preview,
+                        VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                        HorizontalScrollBarVisibility = ScrollBarVisibility.Auto
+                    };
+
+                    var printButton = new Button
+                    {
+                        Content = "🖨 In hóa đơn",
+                        FontSize = 16,
+                        Padding = new Thickness(20, 10, 20, 10),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Margin = new Thickness(10),
+                        Background = new SolidColorBrush(Color.FromRgb(46, 204, 113)),
+                        Foreground = Brushes.White
+                    };
+
+                    printButton.Click += (s, e) => PrintDocument(preview);
+
+                    var dockPanel = new DockPanel();
+                    DockPanel.SetDock(printButton, Dock.Bottom);
+                    dockPanel.Children.Add(printButton);
+                    dockPanel.Children.Add(scrollViewer);
+
+                    Content = dockPanel;
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy hóa đơn!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Close();
+                }
+            }
+        }
+
+        private void PrintDocument(FrameworkElement element)
+        {
+            try
+            {
+                PrintDialog printDialog = new PrintDialog();
+                if (printDialog.ShowDialog() == true)
+                {
+                    // Scale to fit page
+                    printDialog.PrintVisual(element, "Hóa đơn thanh toán");
+                    MessageBox.Show("In thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi in: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

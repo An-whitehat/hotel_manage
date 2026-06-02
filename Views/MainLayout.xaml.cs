@@ -14,20 +14,11 @@ using System.Windows.Shapes;
 
 namespace QLKS.Views
 {
-    /// <summary>
-    /// Interaction logic for MainLayout.xaml
-    /// </summary>
     public partial class MainLayout : Window
     {
         public MainLayout()
         {
             InitializeComponent();
-        }
-
-        private void btnInReportKhach_Click(object sender, RoutedEventArgs e)
-        {
-            Views.ReportKhachHangWindow rpWin = new Views.ReportKhachHangWindow();
-            rpWin.ShowDialog();
         }
     }
 }
