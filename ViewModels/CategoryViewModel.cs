@@ -17,8 +17,18 @@ namespace QLKS.ViewModels
         private HotelManagementEntities _db = new HotelManagementEntities();
 
         // Danh sách hiển thị lên UI
-        public ObservableCollection<LoaiPhong> ListLoaiPhong { get; set; }
-        public ObservableCollection<DichVu> ListDichVu { get; set; }
+        private ObservableCollection<LoaiPhong> _listLoaiPhong;
+        public ObservableCollection<LoaiPhong> ListLoaiPhong
+        {
+            get => _listLoaiPhong;
+            set => SetProperty(ref _listLoaiPhong, value);
+        }
+        private ObservableCollection<DichVu> _listDichVu;
+        public ObservableCollection<DichVu> ListDichVu
+        {
+            get => _listDichVu;
+            set => SetProperty(ref _listDichVu, value);
+        }
 
         // Đối tượng ràng buộc khi Chọn dòng trên DataGrid hoặc điền Form
         private LoaiPhong _selectedLoaiPhong;
