@@ -43,7 +43,6 @@ namespace QLKS.ViewModels
             LoadData();
             ClearForm();
 
-            // Khởi tạo các Command liên kết với nút bấm
             AddCommand = new RelayCommand(p => ExecuteAdd());
             UpdateCommand = new RelayCommand(p => ExecuteUpdate(), p => SelectedKhachHang != null && SelectedKhachHang.MaKH != 0);
             DeleteCommand = new RelayCommand(p => ExecuteDelete(), p => SelectedKhachHang != null && SelectedKhachHang.MaKH != 0);

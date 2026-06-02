@@ -29,8 +29,7 @@ namespace QLKS.Views
         private void btn_showreport_Click(object sender, RoutedEventArgs e)
         {
             ReportDocument rpt = new Report.DanhSachKhachHang();
-            rpt.SetDatabaseLogon("sa", "123", "TÊN_SERVER", "TÊN_CSDL");
-
+            rpt.SetDatabaseLogon("", "", "LAPTOP-RNTPF90S", "HotelManagement");
             report1.ViewerCore.ReportSource = rpt;
         }
     }
