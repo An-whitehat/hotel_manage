@@ -1,0 +1,80 @@
+<Window x:Class="QLKS.Views.EditKhachHangDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Chỉnh sửa khách hàng"
+        Width="420" Height="360"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#F4F6F9">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Chỉnh sửa thông tin khách hàng"
+                   FontSize="16" FontWeight="Bold" Foreground="#1a2235"
+                   Margin="0,0,0,20"/>
+
+        <!-- Họ và Tên -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,12">
+            <TextBlock Text="Họ và Tên *" FontSize="12" Foreground="#6B7280" Margin="0,0,0,4"/>
+            <TextBox x:Name="TxtHoTen" Height="34" Padding="8,0"
+                     VerticalContentAlignment="Center" FontSize="13"
+                     BorderBrush="#D1D5DB" BorderThickness="1"/>
+        </StackPanel>
+
+        <!-- CCCD -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,12">
+            <TextBlock Text="Số CCCD/Passport *" FontSize="12" Foreground="#6B7280" Margin="0,0,0,4"/>
+            <TextBox x:Name="TxtCCCD" Height="34" Padding="8,0"
+                     VerticalContentAlignment="Center" FontSize="13"
+                     BorderBrush="#D1D5DB" BorderThickness="1"/>
+        </StackPanel>
+
+        <!-- SDT -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,12">
+            <TextBlock Text="Số điện thoại *" FontSize="12" Foreground="#6B7280" Margin="0,0,0,4"/>
+            <TextBox x:Name="TxtSDT" Height="34" Padding="8,0"
+                     VerticalContentAlignment="Center" FontSize="13"
+                     BorderBrush="#D1D5DB" BorderThickness="1"/>
+        </StackPanel>
+
+        <!-- DiaChi -->
+        <StackPanel Grid.Row="4" Margin="0,0,0,12">
+            <TextBlock Text="Địa chỉ" FontSize="12" Foreground="#6B7280" Margin="0,0,0,4"/>
+            <TextBox x:Name="TxtDiaChi" Height="34" Padding="8,0"
+                     VerticalContentAlignment="Center" FontSize="13"
+                     BorderBrush="#D1D5DB" BorderThickness="1"/>
+        </StackPanel>
+
+        <!-- Email -->
+        <StackPanel Grid.Row="5" Margin="0,0,0,12">
+            <TextBlock Text="Email" FontSize="12" Foreground="#6B7280" Margin="0,0,0,4"/>
+            <TextBox x:Name="TxtEmail" Height="34" Padding="8,0"
+                     VerticalContentAlignment="Center" FontSize="13"
+                     BorderBrush="#D1D5DB" BorderThickness="1"/>
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+            <Button Content="Hủy" Width="90" Height="34"
+                    Margin="0,0,10,0" FontSize="13"
+                    Background="White" Foreground="#374151"
+                    BorderBrush="#D1D5DB" BorderThickness="1"
+                    Click="BtnCancel_Click" Cursor="Hand"/>
+            <Button Content="Lưu thay đổi" Width="120" Height="34"
+                    FontSize="13" FontWeight="SemiBold"
+                    Background="#2563EB" Foreground="White"
+                    BorderThickness="0"
+                    Click="BtnSave_Click" Cursor="Hand"/>
+        </StackPanel>
+    </Grid>
+</Window>

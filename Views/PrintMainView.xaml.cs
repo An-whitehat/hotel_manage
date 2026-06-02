@@ -1,43 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QLKS.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace QLKS.Views
 {
     /// <summary>
     /// Interaction logic for PrintMainView.xaml
+    /// Code-behind chỉ làm 1 việc: wire PrintAction delegates vào ViewModel
+    /// sau khi InitializeComponent hoàn tất (lúc này GuestReport và EmployeeReport đã tồn tại).
     /// </summary>
     public partial class PrintMainView : UserControl
     {
         public PrintMainView()
         {
             InitializeComponent();
+
+            // Sau khi DataTemplate tạo ViewModel qua MainLayout, DataContext đã được set.
+            // Dùng Loaded để chắc chắn ViewModel đã sẵn sàng.
+            this.Loaded += (_, __) => WireCommands();
         }
-        private void PrintGuest_Click(object sender, RoutedEventArgs e)
+
+        private void WireCommands()
         {
-            if (GuestReport != null)
+            if (DataContext is PrintMainViewModel vm)
             {
-                GuestReport.ExecutePrint();
+                vm.PrintGuestAction    = () => GuestReport?.ExecutePrint();
+                vm.PrintEmployeeAction = () => EmployeeReport?.ExecutePrint();
+
+                // Refresh CanExecute sau khi delegate được gán
+                System.Windows.Input.CommandManager.InvalidateRequerySuggested();
             }
         }
 
+        // Giữ lại 2 handler cũ để tương thích nếu có chỗ nào còn gọi
+        private void PrintGuest_Click(object sender, RoutedEventArgs e)
+            => GuestReport?.ExecutePrint();
+
         private void PrintEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            if (EmployeeReport != null)
-            {
-                EmployeeReport.ExecutePrint();
-            }
-        }
+            => EmployeeReport?.ExecutePrint();
     }
 }

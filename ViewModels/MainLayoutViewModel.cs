@@ -33,8 +33,7 @@ namespace QLKS.ViewModels
         // ─── Thông tin user đang đăng nhập ──────────────────────────────────
         public string CurrentUser => SessionService.CurrentUser?.HoTen ?? "Admin";
         public string VaiTro => SessionService.CurrentUser?.VaiTro ?? "";
-        // public bool IsAdmin => SessionService.HasRole("Admin", "QuanLy");
-        public bool IsAdmin => true; // Cấp quyền tối cao tạm thời để test code
+        public bool IsAdmin => SessionService.HasRole("Admin", "QuanLy");
 
         // ─── Navigation Command (dùng CommandParameter từ XAML) ─────────────
         public RelayCommand NavigateCommand { get; }

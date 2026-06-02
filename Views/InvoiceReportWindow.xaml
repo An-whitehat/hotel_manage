@@ -3,8 +3,53 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer"
         mc:Ignorable="d"
-        Title="Hóa đơn thanh toán" Height="600" Width="700"
+        Title="Hóa đơn thanh toán" Height="650" Width="850"
         WindowStartupLocation="CenterScreen">
-    <Grid/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TabControl x:Name="TabMain" Background="White" BorderThickness="0">
+
+            <!-- Tab 1: WPF preview của team — KHÔNG đụng vào nội dung -->
+            <TabItem Header="🖥  Xem nhanh" FontSize="13" Padding="12,6">
+                <!-- nội dung được điền từ code-behind (DockPanel với TextBlock + nút In) -->
+                <ContentPresenter x:Name="WpfPreviewHost"/>
+            </TabItem>
+
+            <!-- Tab 2: Crystal Reports Viewer -->
+            <TabItem Header="📄  Crystal Report" FontSize="13" Padding="12,6">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                Margin="8,6" Background="#F4F6F9">
+                        <Button x:Name="BtnLoadCrystal"
+                                Content="↺  Tải báo cáo"
+                                Click="BtnLoadCrystal_Click"
+                                Height="32" Padding="14,0"
+                                FontSize="13" Cursor="Hand"
+                                Background="#2563EB" Foreground="White"
+                                BorderThickness="0"/>
+                        <TextBlock x:Name="TxtCrystalStatus"
+                                   Text="Nhấn 'Tải báo cáo' để xem Crystal Report"
+                                   VerticalAlignment="Center"
+                                   Margin="12,0,0,0"
+                                   Foreground="#6B7280" FontSize="12"/>
+                    </StackPanel>
+
+                    <Viewer:CrystalReportsViewer x:Name="CrystalViewer"
+                                                 Grid.Row="1"
+                                                 Margin="0"/>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
 </Window>

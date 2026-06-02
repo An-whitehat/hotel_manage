@@ -144,10 +144,10 @@
                         Height="56"
                         Padding="16,0">
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="👤  Admin"
+                        <TextBlock Text="{Binding CurrentUser, StringFormat='👤  {0}'}"
                      Foreground="White"
                      FontSize="13"/>
-                        <TextBlock Text="Quản trị viên"
+                        <TextBlock Text="{Binding VaiTro}"
                      Foreground="#7F8C8D"
                      FontSize="11"/>
                     </StackPanel>
