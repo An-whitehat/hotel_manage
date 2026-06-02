@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:QLKS.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="900">
-    <Grid Margin="16">
+    <Grid Margin="16" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -57,10 +58,10 @@
             <Border Grid.Column="2" Background="White" Padding="14" CornerRadius="10">
                 <DataGrid ItemsSource="{Binding ListPhong}" SelectedItem="{Binding SelectedPhong}" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="32" SelectionMode="Single">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã phòng" Binding="{Binding MaPhong}" Width="80"/>
+                        <DataGridTextColumn Header="Mã" Binding="{Binding MaPhong}" Width="80"/>
                         <DataGridTextColumn Header="Số phòng" Binding="{Binding SoPhong}" Width="110"/>
                         <DataGridTextColumn Header="Loại phòng" Binding="{Binding LoaiPhong.TenLoaiPhong}" Width="160"/>
-                        <DataGridTextColumn Header="Giá phòng (VNĐ)" Binding="{Binding LoaiPhong.GiaPhong, StringFormat={}{0:#,##0}}" Width="140"/>
+                        <DataGridTextColumn Header="Giá phòng (VNĐ)" Binding="{Binding LoaiPhong.GiaPhong, StringFormat={}{0:#.##0}}" Width="140"/>
                         <DataGridTextColumn Header="Số giường" Binding="{Binding LoaiPhong.SoGiuong}" Width="100"/>
                         <DataGridTextColumn Header="Trạng thái" Binding="{Binding TrangThai}" Width="120"/>
                         <DataGridTextColumn Header="Ghi chú" Binding="{Binding GhiChu}" Width="*"/>

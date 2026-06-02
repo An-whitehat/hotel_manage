@@ -1,4 +1,7 @@
-﻿using System;
+﻿using QLKS.Commands;
+using QLKS.Models;
+using QLKS.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,8 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using QLKS.Commands;
-using QLKS.Models;
 
 namespace QLKS.ViewModels
 {
@@ -22,8 +23,18 @@ namespace QLKS.ViewModels
             set { _currentInvoice = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<DichVu> ListDichVu { get; set; }
-        public ObservableCollection<ChiTietHoaDon> CurrentDetails { get; set; }
+        private ObservableCollection<DichVu> _listDichVu;
+        public ObservableCollection<DichVu> ListDichVu
+        {
+            get => _listDichVu;
+            set => SetProperty(ref _listDichVu, value);
+        }
+        private ObservableCollection<ChiTietHoaDon> _currentDetails;
+        public ObservableCollection<ChiTietHoaDon> CurrentDetails
+        {
+            get => _currentDetails;
+            set => SetProperty(ref _currentDetails, value);
+        }
 
         private DichVu _selectedDichVu;
         public DichVu SelectedDichVu
@@ -38,10 +49,22 @@ namespace QLKS.ViewModels
             get => _quantityToImport;
             set { _quantityToImport = value; OnPropertyChanged(); }
         }
+        private string _ghiChu;
+        public string GhiChu
+        {
+            get => _ghiChu;
+            set
+            {
+                _ghiChu = value;
+                CurrentInvoice.GhiChu = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand CreateNewInvoiceCmd { get; set; }
         public ICommand AddItemToInvoiceCmd { get; set; }
         public ICommand SaveInvoiceCmd { get; set; }
+        public ICommand PrintInvoiceCmd { get; set; }
 
         public InvoiceImportViewModel()
         {
@@ -101,6 +124,20 @@ namespace QLKS.ViewModels
                     MessageBox.Show("Lỗi hệ thống: " + ex.Message);
                 }
             }, p => CurrentDetails.Count > 0);
+
+            PrintInvoiceCmd = new RelayCommand(p =>
+            {
+                if (CurrentInvoice.MaHoaDon <= 0)
+                {
+                    MessageBox.Show("Vui lòng lưu hóa đơn trước!");
+                    return;
+                }
+
+                InvoiceReportWindow win =
+                    new InvoiceReportWindow(CurrentInvoice.MaHoaDon);
+
+                win.ShowDialog();
+            });
         }
 
         private void ResetInvoice()
