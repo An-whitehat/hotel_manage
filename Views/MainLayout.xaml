@@ -168,7 +168,7 @@
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
                                 CommandParameter="Booking"/>
-                        <Button Content="👤  Khách hàng"
+                        <Button Content="👤  Tìm kiếm"
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
                                 CommandParameter="Search"/>
@@ -176,14 +176,6 @@
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
                                 CommandParameter="Invoice"/>
-                        <Button Content="📈  Thống kê doanh thu"
-                                Style="{StaticResource SidebarButton}"
-                                Command="{Binding NavigateCommand}"
-                                CommandParameter="Revenue"/>
-                        <Button Content="📋  Báo cáo"
-                                Style="{StaticResource SidebarButton}"
-                                Command="{Binding NavigateCommand}"
-                                CommandParameter="Report"/>
                         <Button Content="👨‍💼  Nhân viên"
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
@@ -200,9 +192,6 @@
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
                                 CommandParameter="MyPrintMenu"/>
-                        <Button Content="🖨  In Report Khách"
-                                Style="{StaticResource SidebarButton}"
-                                Click="btnInReportKhach_Click"/>
                     </StackPanel>
                 </ScrollViewer>
                 <!-- Bottom: user info -->
