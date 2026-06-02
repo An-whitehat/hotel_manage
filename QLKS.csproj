@@ -306,6 +306,9 @@
     <Compile Include="Views\PrintMainView.xaml.cs">
       <DependentUpon>PrintMainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReportKhachHangWindow.xaml.cs">
+      <DependentUpon>ReportKhachHangWindow.xaml</DependentUpon>
+    </Compile>
     <!--
     <Compile Include="Views\ReportKhachHangWindow.xaml.cs">
       <DependentUpon>ReportKhachHangWindow.xaml</DependentUpon>
@@ -401,6 +404,10 @@
     <Page Include="Views\PrintMainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReportKhachHangWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <!--
     <Page Include="Views\ReportKhachHangWindow.xaml">
