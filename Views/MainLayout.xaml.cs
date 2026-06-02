@@ -23,5 +23,11 @@ namespace QLKS.Views
         {
             InitializeComponent();
         }
+
+        private void btnInReportKhach_Click(object sender, RoutedEventArgs e)
+        {
+            Views.ReportKhachHangWindow rpWin = new Views.ReportKhachHangWindow();
+            rpWin.ShowDialog();
+        }
     }
 }

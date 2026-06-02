@@ -82,6 +82,18 @@ namespace QLKS.ViewModels
                     }
                     NavigateTo(page, "Báo cáo doanh thu", new BaoCaoViewModel());
                     break;
+                case "MyPrintMenu":
+                    NavigateTo(page, "Hệ thống In Báo Cáo", new PrintMainViewModel()); 
+                    break;
+
+                case "MyRevenueStats":
+                    if (!IsAdmin)
+                    {
+                        MessageBox.Show("Chỉ Admin hoặc Quản lý mới xem được.", "Phân quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    NavigateTo(page, "Thống kê doanh thu", new RevenueViewModel());
+                    break;
                 // Các view chưa có ViewModel → bỏ qua hoặc thông báo
                 case "Dashboard":
                     NavigateTo(page, "Trang chủ", null);

@@ -257,6 +257,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PrintEmployeeViewModel.cs" />
     <Compile Include="ViewModels\PrintGuestViewModel.cs" />
+    <Compile Include="ViewModels\PrintMainViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StaffViewModel.cs" />
     <Compile Include="Views\BaoCaoView.xaml.cs">
