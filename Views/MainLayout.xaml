@@ -34,6 +34,10 @@
         <DataTemplate DataType="{x:Type vm:BaoCaoViewModel}">
             <views:BaoCaoView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <views:DashboardView/>
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:RoomViewModel}">
             <views:RoomView/>
         </DataTemplate>

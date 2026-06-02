@@ -1,0 +1,122 @@
+<UserControl x:Class="QLKS.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="900"
+             Background="#F0F2F5">
+
+    <UserControl.Resources>
+        <!-- Style card trắng -->
+        <Style x:Key="StatCard" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="24,20"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" Opacity="0.06" BlurRadius="12" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28">
+
+            <!-- Greeting -->
+            <StackPanel Margin="0,0,0,24">
+                <TextBlock FontSize="22" FontWeight="Bold" Foreground="#1A2340">
+                    <Run Text="Xin chào, "/>
+                    <Run Text="{Binding TenNguoiDung}" Foreground="#2F3F92"/>
+                    <Run Text=" 👋"/>
+                </TextBlock>
+                <TextBlock Text="{Binding NgayHienTai}" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <!-- Row 1: 3 stat cards chính -->
+            <UniformGrid Columns="3" Margin="0,0,0,16">
+
+                <!-- Phòng trống -->
+                <Border Style="{StaticResource StatCard}" Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="🏨" FontSize="28" Margin="0,0,0,8"/>
+                        <TextBlock Text="{Binding PhongTrong}" FontSize="36" FontWeight="Bold" Foreground="#2ECC71"/>
+                        <TextBlock Text="Phòng trống" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Đang thuê -->
+                <Border Style="{StaticResource StatCard}" Margin="6,0,6,0">
+                    <StackPanel>
+                        <TextBlock Text="🛏️" FontSize="28" Margin="0,0,0,8"/>
+                        <TextBlock Text="{Binding PhongDangThue}" FontSize="36" FontWeight="Bold" Foreground="#E67E22"/>
+                        <TextBlock Text="Phòng đang thuê" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Khách check-in -->
+                <Border Style="{StaticResource StatCard}" Margin="12,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="👤" FontSize="28" Margin="0,0,0,8"/>
+                        <TextBlock Text="{Binding KhachHomNay}" FontSize="36" FontWeight="Bold" Foreground="#3498DB"/>
+                        <TextBlock Text="Khách đang lưu trú" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+            </UniformGrid>
+
+            <!-- Row 2: 3 stat cards phụ -->
+            <UniformGrid Columns="3" Margin="0,0,0,24">
+
+                <!-- Doanh thu hôm nay -->
+                <Border Style="{StaticResource StatCard}" Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="💰" FontSize="28" Margin="0,0,0,8"/>
+                        <TextBlock Text="{Binding DoanhThuHomNay, StringFormat={}{0:#,##0} đ}"
+                                   FontSize="22" FontWeight="Bold" Foreground="#2F3F92"/>
+                        <TextBlock Text="Doanh thu hôm nay" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Đặt phòng chờ xử lý -->
+                <Border Style="{StaticResource StatCard}" Margin="6,0,6,0">
+                    <StackPanel>
+                        <TextBlock Text="📅" FontSize="28" Margin="0,0,0,8"/>
+                        <TextBlock Text="{Binding DatPhongChoXuLy}" FontSize="36" FontWeight="Bold" Foreground="#E74C3C"/>
+                        <TextBlock Text="Đặt phòng chờ xử lý" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Nhân viên -->
+                <Border Style="{StaticResource StatCard}" Margin="12,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="👨‍💼" FontSize="28" Margin="0,0,0,8"/>
+                        <TextBlock Text="{Binding TongNhanVien}" FontSize="36" FontWeight="Bold" Foreground="#9B59B6"/>
+                        <TextBlock Text="Nhân viên đang làm" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+            </UniformGrid>
+
+            <!-- Banner nhanh -->
+            <Border Background="#2F3F92" CornerRadius="12" Padding="28,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Happy Hotel — Hệ thống quản lý khách sạn"
+                                   FontSize="16" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="Sử dụng menu bên trái để điều hướng đến các chức năng."
+                                   FontSize="13" Foreground="#BDC8FF" Margin="0,6,0,0"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Text="🏩" FontSize="48"
+                               VerticalAlignment="Center" Margin="20,0,0,0"/>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

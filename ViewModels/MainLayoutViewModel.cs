@@ -47,7 +47,7 @@ namespace QLKS.ViewModels
             DangXuatCommand = new RelayCommand(_ => DangXuat());
 
             // Mở trang mặc định
-            HandleNavigate("Staff");
+            HandleNavigate("Dashboard");
         }
 
         // ─── Router điều hướng ───────────────────────────────────────────────
@@ -96,7 +96,7 @@ namespace QLKS.ViewModels
                     break;
                 // Các view chưa có ViewModel → bỏ qua hoặc thông báo
                 case "Dashboard":
-                    NavigateTo(page, "Trang chủ", null);
+                    NavigateTo(page, "Trang chủ", new DashboardViewModel());
                     break;
                 case "Room":
                     NavigateTo(page, "Quản lý phòng", new RoomViewModel());
