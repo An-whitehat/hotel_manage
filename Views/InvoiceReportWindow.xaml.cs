@@ -65,7 +65,7 @@ namespace QLKS.Views
 
                     var sb = new System.Text.StringBuilder();
                     sb.AppendLine("═══════════════════════════════════════════════════════");
-                    sb.AppendLine("           KHÁCH SẠN ĐẠT & AN");
+                    sb.AppendLine("           HAPPY HOTEL");
                     sb.AppendLine("              HÓA ĐƠN THANH TOÁN");
                     sb.AppendLine("═══════════════════════════════════════════════════════");
                     sb.AppendLine($"Mã hóa đơn:      {data.MaHoaDon}");
