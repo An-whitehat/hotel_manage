@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 
 namespace QLKS.Views
 {
@@ -26,13 +28,9 @@ namespace QLKS.Views
         }
         private void btn_showreport_Click(object sender, RoutedEventArgs e)
         {
-            // Lấy cái report m vừa thiết kế ra
-            Report.DanhSachKhachHang rpt = new Report.DanhSachKhachHang();
-
-            // Dòng tự động đăng nhập (m nhớ thay "sa", "123", tên Server và CSDL của máy m vào nha)
+            ReportDocument rpt = new Report.DanhSachKhachHang();
             rpt.SetDatabaseLogon("sa", "123", "TÊN_SERVER", "TÊN_CSDL");
 
-            // Nhét đĩa vào Tivi để chiếu lên
             report1.ViewerCore.ReportSource = rpt;
         }
     }
