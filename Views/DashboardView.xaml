@@ -8,7 +8,6 @@
              Background="#F0F2F5">
 
     <UserControl.Resources>
-        <!-- Style card trắng -->
         <Style x:Key="StatCard" TargetType="Border">
             <Setter Property="Background" Value="White"/>
             <Setter Property="CornerRadius" Value="12"/>
@@ -28,10 +27,10 @@
             <StackPanel Margin="0,0,0,24">
                 <TextBlock FontSize="22" FontWeight="Bold" Foreground="#1A2340">
                     <Run Text="Xin chào, "/>
-                    <Run Text="{Binding TenNguoiDung}" Foreground="#2F3F92"/>
+                    <Run Text="{Binding TenNguoiDung, Mode=OneWay}" Foreground="#2F3F92"/>
                     <Run Text=" 👋"/>
                 </TextBlock>
-                <TextBlock Text="{Binding NgayHienTai}" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
+                <TextBlock Text="{Binding NgayHienTai, Mode=OneWay}" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
             </StackPanel>
 
             <!-- Row 1: 3 stat cards chính -->
@@ -41,7 +40,7 @@
                 <Border Style="{StaticResource StatCard}" Margin="0,0,12,0">
                     <StackPanel>
                         <TextBlock Text="🏨" FontSize="28" Margin="0,0,0,8"/>
-                        <TextBlock Text="{Binding PhongTrong}" FontSize="36" FontWeight="Bold" Foreground="#2ECC71"/>
+                        <TextBlock Text="{Binding PhongTrong, Mode=OneWay}" FontSize="36" FontWeight="Bold" Foreground="#2ECC71"/>
                         <TextBlock Text="Phòng trống" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
                     </StackPanel>
                 </Border>
@@ -50,7 +49,7 @@
                 <Border Style="{StaticResource StatCard}" Margin="6,0,6,0">
                     <StackPanel>
                         <TextBlock Text="🛏️" FontSize="28" Margin="0,0,0,8"/>
-                        <TextBlock Text="{Binding PhongDangThue}" FontSize="36" FontWeight="Bold" Foreground="#E67E22"/>
+                        <TextBlock Text="{Binding PhongDangThue, Mode=OneWay}" FontSize="36" FontWeight="Bold" Foreground="#E67E22"/>
                         <TextBlock Text="Phòng đang thuê" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
                     </StackPanel>
                 </Border>
@@ -59,7 +58,7 @@
                 <Border Style="{StaticResource StatCard}" Margin="12,0,0,0">
                     <StackPanel>
                         <TextBlock Text="👤" FontSize="28" Margin="0,0,0,8"/>
-                        <TextBlock Text="{Binding KhachHomNay}" FontSize="36" FontWeight="Bold" Foreground="#3498DB"/>
+                        <TextBlock Text="{Binding KhachHomNay, Mode=OneWay}" FontSize="36" FontWeight="Bold" Foreground="#3498DB"/>
                         <TextBlock Text="Khách đang lưu trú" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
                     </StackPanel>
                 </Border>
@@ -73,7 +72,7 @@
                 <Border Style="{StaticResource StatCard}" Margin="0,0,12,0">
                     <StackPanel>
                         <TextBlock Text="💰" FontSize="28" Margin="0,0,0,8"/>
-                        <TextBlock Text="{Binding DoanhThuHomNay, StringFormat={}{0:#,##0} đ}"
+                        <TextBlock Text="{Binding DoanhThuHomNay, Mode=OneWay, StringFormat={}{0:#,##0} đ}"
                                    FontSize="22" FontWeight="Bold" Foreground="#2F3F92"/>
                         <TextBlock Text="Doanh thu hôm nay" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
                     </StackPanel>
@@ -83,7 +82,7 @@
                 <Border Style="{StaticResource StatCard}" Margin="6,0,6,0">
                     <StackPanel>
                         <TextBlock Text="📅" FontSize="28" Margin="0,0,0,8"/>
-                        <TextBlock Text="{Binding DatPhongChoXuLy}" FontSize="36" FontWeight="Bold" Foreground="#E74C3C"/>
+                        <TextBlock Text="{Binding DatPhongChoXuLy, Mode=OneWay}" FontSize="36" FontWeight="Bold" Foreground="#E74C3C"/>
                         <TextBlock Text="Đặt phòng chờ xử lý" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
                     </StackPanel>
                 </Border>
@@ -92,14 +91,14 @@
                 <Border Style="{StaticResource StatCard}" Margin="12,0,0,0">
                     <StackPanel>
                         <TextBlock Text="👨‍💼" FontSize="28" Margin="0,0,0,8"/>
-                        <TextBlock Text="{Binding TongNhanVien}" FontSize="36" FontWeight="Bold" Foreground="#9B59B6"/>
+                        <TextBlock Text="{Binding TongNhanVien, Mode=OneWay}" FontSize="36" FontWeight="Bold" Foreground="#9B59B6"/>
                         <TextBlock Text="Nhân viên đang làm" FontSize="13" Foreground="#7F8C8D" Margin="0,4,0,0"/>
                     </StackPanel>
                 </Border>
 
             </UniformGrid>
 
-            <!-- Banner nhanh -->
+            <!-- Banner -->
             <Border Background="#2F3F92" CornerRadius="12" Padding="28,20">
                 <Grid>
                     <Grid.ColumnDefinitions>
