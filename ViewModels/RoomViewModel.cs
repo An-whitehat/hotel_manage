@@ -17,9 +17,24 @@ namespace QLKS.ViewModels
     {
         private HotelManagementEntities _db = new HotelManagementEntities();
 
-        public ObservableCollection<Phong> ListPhong { get; set; }
-        public ObservableCollection<LoaiPhong> ListLoaiPhongCombo { get; set; } // Dùng cho ComboBox chọn loại phòng
-        public ObservableCollection<string> ListTrangThai { get; set; } // Trống, Đang thuê, Đang dọn, Bảo trì
+        private ObservableCollection<Phong> _listPhong;
+        public ObservableCollection<Phong> ListPhong
+        {
+            get => _listPhong;
+            set => SetProperty(ref _listPhong, value);
+        }
+        private ObservableCollection<LoaiPhong> _listLoaiPhongCombo;
+        public ObservableCollection<LoaiPhong> ListLoaiPhongCombo
+        {
+            get => _listLoaiPhongCombo;
+            set => SetProperty(ref _listLoaiPhongCombo, value);
+        } // Dùng cho ComboBox chọn loại phòng
+        private ObservableCollection<string> _listTrangThai;
+        public ObservableCollection<string> ListTrangThai
+        {
+            get => _listTrangThai;
+            set => SetProperty(ref _listTrangThai, value);
+        }// Trống, Đang thuê, Đang dọn, Bảo trì
 
         private Phong _selectedPhong;
         public Phong SelectedPhong

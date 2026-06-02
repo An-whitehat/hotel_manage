@@ -33,7 +33,8 @@ namespace QLKS.ViewModels
         // ─── Thông tin user đang đăng nhập ──────────────────────────────────
         public string CurrentUser => SessionService.CurrentUser?.HoTen ?? "Admin";
         public string VaiTro => SessionService.CurrentUser?.VaiTro ?? "";
-        public bool IsAdmin => SessionService.HasRole("Admin", "QuanLy");
+        // public bool IsAdmin => SessionService.HasRole("Admin", "QuanLy");
+        public bool IsAdmin => true; // Cấp quyền tối cao tạm thời để test code
 
         // ─── Navigation Command (dùng CommandParameter từ XAML) ─────────────
         public RelayCommand NavigateCommand { get; }
@@ -66,6 +67,9 @@ namespace QLKS.ViewModels
                 case "Search":
                     NavigateTo(page, "Tìm kiếm", new SearchViewModel());
                     break;
+                case "Customer":
+                    NavigateTo(page, "Quản lý Khách hàng", new CustomerViewModel());
+                    break;
                 case "Invoice":
                     NavigateTo(page, "Hóa đơn", new InvoiceCheckoutViewModel());
                     break;
@@ -77,6 +81,18 @@ namespace QLKS.ViewModels
                         return;
                     }
                     NavigateTo(page, "Báo cáo doanh thu", new BaoCaoViewModel());
+                    break;
+                case "MyPrintMenu":
+                    NavigateTo(page, "Hệ thống In Báo Cáo", new PrintMainViewModel()); 
+                    break;
+
+                case "MyRevenueStats":
+                    if (!IsAdmin)
+                    {
+                        MessageBox.Show("Chỉ Admin hoặc Quản lý mới xem được.", "Phân quyền", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    NavigateTo(page, "Thống kê doanh thu", new RevenueViewModel());
                     break;
                 // Các view chưa có ViewModel → bỏ qua hoặc thông báo
                 case "Dashboard":

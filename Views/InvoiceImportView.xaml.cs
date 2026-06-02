@@ -10,24 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace QLKS.Views
 {
     /// <summary>
-    /// Interaction logic for MainLayout.xaml
+    /// Interaction logic for InvoiceImportView.xaml
     /// </summary>
-    public partial class MainLayout : Window
+    public partial class InvoiceImportView : UserControl
     {
-        public MainLayout()
+        public InvoiceImportView()
         {
             InitializeComponent();
-        }
-
-        private void btnInReportKhach_Click(object sender, RoutedEventArgs e)
-        {
-            Views.ReportKhachHangWindow rpWin = new Views.ReportKhachHangWindow();
-            rpWin.ShowDialog();
         }
     }
 }

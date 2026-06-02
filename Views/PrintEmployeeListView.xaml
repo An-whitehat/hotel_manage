@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QLKS.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="PrintArea" Margin="50">
+    <Grid x:Name="PrintArea" Margin="50" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

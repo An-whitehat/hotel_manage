@@ -37,6 +37,18 @@
         <DataTemplate DataType="{x:Type vm:RoomViewModel}">
             <views:RoomView/>
         </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type vm:CustomerViewModel}">
+            <views:CustomerView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type vm:RevenueViewModel}">
+            <views:RevenueView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:PrintMainViewModel}">
+            <views:PrintMainView/>
+        </DataTemplate>
 
         <!-- Style nút sidebar -->
         <Style x:Key="SidebarButton" TargetType="Button">
@@ -123,61 +135,67 @@
                            FontWeight="Bold"
                            Margin="24,16,0,8"
                            />
-
-                <!-- Nav buttons -->
-                <StackPanel DockPanel.Dock="Top">
-                    <Button Content="📊  Trang chủ"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Dashboard"/>
-                    <Button Content="🛏  Quản lý phòng"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}" 
-                            CommandParameter="Room"/>
-                    <Button Content="🗺  Sơ đồ phòng"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="FloorPlan"/>
-                    <Button Content="📅  Đặt phòng"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Booking"/>
-                    <Button Content="👤  Khách hàng"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Search"/>
-                    <Button Content="🧾  Hóa đơn"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Invoice"/>
-                    <Button Content="📈  Thống kê doanh thu"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Revenue"/>
-                    <Button Content="📋  Báo cáo"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Report"/>
-                    <Button Content="👨‍💼  Nhân viên"
-                            Style="{StaticResource SidebarButton}"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Staff"/>
-                </StackPanel>
-
-                <!-- Bottom: user info -->
                 <Border DockPanel.Dock="Bottom"
                         Background="#162030"
                         Height="56"
                         Padding="16,0">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="👤  Admin"
-                                   Foreground="White"
-                                   FontSize="13"/>
+                     Foreground="White"
+                     FontSize="13"/>
                         <TextBlock Text="Quản trị viên"
-                                   Foreground="#7F8C8D"
-                                   FontSize="11"/>
+                     Foreground="#7F8C8D"
+                     FontSize="11"/>
                     </StackPanel>
                 </Border>
+
+                <!-- Nav buttons -->
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" BorderThickness="0">
+                    <StackPanel>
+                        <Button Content="📊  Trang chủ"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Dashboard"/>
+                        <Button Content="🛏  Quản lý phòng"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="Room"/>
+                        <Button Content="🗺  Sơ đồ phòng"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="FloorPlan"/>
+                        <Button Content="📅  Đặt phòng"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Booking"/>
+                        <Button Content="👤  Tìm kiếm"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Search"/>
+                        <Button Content="🧾  Hóa đơn"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Invoice"/>
+                        <Button Content="👨‍💼  Nhân viên"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Staff"/>
+                        <Button Content="👤  Khách hàng"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Customer"/>
+                        <Button Content="📈  Thống kê doanh thu"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="MyRevenueStats"/>
+                        <Button Content="📋  Báo cáo"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="MyPrintMenu"/>
+                    </StackPanel>
+                </ScrollViewer>
+                <!-- Bottom: user info -->
+              
             </DockPanel>
         </Border>
 
