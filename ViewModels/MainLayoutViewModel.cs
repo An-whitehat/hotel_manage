@@ -100,6 +100,9 @@ namespace QLKS.ViewModels
                 case "Room":
                     NavigateTo(page, "Quản lý phòng", new RoomViewModel());
                     break;
+                case "Category":
+                    NavigateTo(page, "Loại phòng & Dịch vụ", new CategoryViewModel());
+                    break;
                 case "Revenue":
                     if (!IsAdmin)
                     {

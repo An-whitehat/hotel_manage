@@ -42,6 +42,10 @@
             <views:RoomView/>
         </DataTemplate>
         
+        <DataTemplate DataType="{x:Type vm:CategoryViewModel}">
+            <views:CategoryView/>
+        </DataTemplate>
+        
         <DataTemplate DataType="{x:Type vm:CustomerViewModel}">
             <views:CustomerView/>
         </DataTemplate>
@@ -164,6 +168,10 @@
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}" 
                                 CommandParameter="Room"/>
+                        <Button Content="🗂  Loại phòng &amp; Dịch vụ"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Category"/>
                         <Button Content="🗺  Sơ đồ phòng"
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
