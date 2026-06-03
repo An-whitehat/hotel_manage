@@ -6,9 +6,6 @@ using System.Windows;
 
 namespace QLKS.Views
 {
-    /// <summary>
-    /// Crystal Reports viewer cho Danh sách Khách hàng
-    /// </summary>
     public partial class ReportKhachHangWindow : Window
     {
         public ReportKhachHangWindow()
@@ -18,15 +15,26 @@ namespace QLKS.Views
 
         private void btn_showreport_Click(object sender, RoutedEventArgs e)
         {
-            ReportDocument rpt = new Report.DanhSachKhachHang();
+            try
+            {
+                var connStr = ConfigurationManager.ConnectionStrings["HotelManagementDB"]?.ConnectionString
+                              ?? "Data Source=.;Initial Catalog=HotelManagement;Integrated Security=True";
 
-            // Dòng đăng nhập của m
-            rpt.SetDatabaseLogon("sa", "123", "TÊN_SERVER", "TÊN_CSDL");
+                var builder  = new System.Data.SqlClient.SqlConnectionStringBuilder(connStr);
+                string server   = builder.DataSource;
+                string database = builder.InitialCatalog;
 
-            // NÉM THÊM DÒNG NÀY VÀO ĐỂ ÉP NÓ XÓA CACHE CŨ, KÉO DATA MỚI TỪ SQL
-            rpt.Refresh();
+                ReportDocument rpt = new DanhSachKhachHang();
+                rpt.SetDatabaseLogon("", "", server, database);
+                rpt.Refresh();
 
-            report1.ViewerCore.ReportSource = rpt;
+                report1.ViewerCore.ReportSource = rpt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể tải báo cáo:\n" + ex.Message,
+                    "Lỗi Crystal Reports", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

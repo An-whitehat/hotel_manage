@@ -24,14 +24,14 @@ namespace QLKS.Views
         {
             ReportKhachHangWindow rptWindow = new ReportKhachHangWindow();
             rptWindow.Owner = Window.GetWindow(this);
-            rptWindow.ShowDialog();
+            rptWindow.Show();
         }
 
         private void btn_OpenReportPhong_Click(object sender, RoutedEventArgs e)
         {
             Views.ReportPhongWindow rp = new Views.ReportPhongWindow();
             rp.Owner = Window.GetWindow(this);
-            rp.ShowDialog();
+            rp.Show();
         }
     }
 }
