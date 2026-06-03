@@ -31,6 +31,9 @@
         <DataTemplate DataType="{x:Type vm:InvoiceCheckoutViewModel}">
             <local:InvoiceCheckoutView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:InvoiceImportViewModel}">
+            <views:InvoiceImportView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:BaoCaoViewModel}">
             <views:BaoCaoView/>
         </DataTemplate>
@@ -40,6 +43,10 @@
 
         <DataTemplate DataType="{x:Type vm:RoomViewModel}">
             <views:RoomView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type vm:CategoryViewModel}">
+            <views:CategoryView/>
         </DataTemplate>
         
         <DataTemplate DataType="{x:Type vm:CustomerViewModel}">
@@ -164,6 +171,10 @@
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}" 
                                 CommandParameter="Room"/>
+                        <Button Content="🗂  Loại phòng &amp; Dịch vụ"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Category"/>
                         <Button Content="🗺  Sơ đồ phòng"
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
@@ -176,10 +187,14 @@
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
                                 CommandParameter="Search"/>
-                        <Button Content="🧾  Hóa đơn"
+                        <Button Content="🧾  Hóa đơn thanh toán"
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"
                                 CommandParameter="Invoice"/>
+                        <Button Content="📦  Nhập dịch vụ"
+                                Style="{StaticResource SidebarButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="InvoiceImport"/>
                         <Button Content="👨‍💼  Nhân viên"
                                 Style="{StaticResource SidebarButton}"
                                 Command="{Binding NavigateCommand}"

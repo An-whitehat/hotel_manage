@@ -28,12 +28,18 @@
             <Border Grid.Column="0" Background="White" CornerRadius="10" Padding="14">
                 <StackPanel>
                     <TextBlock Text="Thông tin hóa đơn" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"/>
+
+                    <TextBlock Text="Phiếu đang check-in *" FontWeight="SemiBold" Foreground="#E74C3C" Margin="0,0,0,4"/>
+                    <ComboBox ItemsSource="{Binding ListDatPhongCheckIn}"
+                              SelectedItem="{Binding SelectedDatPhong}"
+                              DisplayMemberPath="Display"
+                              Margin="0,0,0,12"
+                              Height="32"/>
+
                     <TextBlock Text="Ngày lập"/>
                     <TextBox Text="{Binding CurrentInvoice.NgayLap}" IsReadOnly="True" Margin="0,0,0,8"/>
-                    <TextBlock Text="Loại hóa đơn"/>
-                    <TextBox Text="{Binding CurrentInvoice.LoaiHoaDon}" IsReadOnly="True" Margin="0,0,0,8"/>
                     <TextBlock Text="Ghi chú"/>
-                    <TextBox Text="{Binding CurrentInvoice.GhiChu}" Margin="0,0,0,12" Height="80" TextWrapping="Wrap" AcceptsReturn="True"/>
+                    <TextBox Text="{Binding GhiChu, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" Height="80" TextWrapping="Wrap" AcceptsReturn="True"/>
                     <Border Background="#F5F6FA" CornerRadius="6" Padding="10" Margin="0,8">
                         <StackPanel>
                             <TextBlock Text="Tổng tiền" FontWeight="Bold" RenderTransformOrigin="0.507,-0.678"/>
