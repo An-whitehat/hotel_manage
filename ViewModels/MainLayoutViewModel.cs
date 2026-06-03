@@ -70,7 +70,10 @@ namespace QLKS.ViewModels
                     NavigateTo(page, "Quản lý Khách hàng", new CustomerViewModel());
                     break;
                 case "Invoice":
-                    NavigateTo(page, "Hóa đơn", new InvoiceCheckoutViewModel());
+                    NavigateTo(page, "Hóa đơn thanh toán", new InvoiceCheckoutViewModel());
+                    break;
+                case "InvoiceImport":
+                    NavigateTo(page, "Nhập dịch vụ", new InvoiceImportViewModel());
                     break;
                 case "BaoCao":
                 case "Report":
