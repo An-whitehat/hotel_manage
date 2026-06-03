@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Windows;
 using System.Windows.Input;
 using QLKS.Models;
 using QLKS.Commands;
-//using System.Net.NetworkInformation;
 
 namespace QLKS.ViewModels
 {
@@ -72,8 +71,7 @@ namespace QLKS.ViewModels
 
         public RoomViewModel()
         {
-            ListPhong = new ObservableCollection<Phong>(_db.Phongs.ToList());
-            ListLoaiPhongCombo = new ObservableCollection<LoaiPhong>(_db.LoaiPhongs.ToList());
+            LoadData();
             ListTrangThai = new ObservableCollection<string> { "Trống", "Đang thuê", "Đang dọn", "Bảo trì" };
             SelectedLoaiPhong = ListLoaiPhongCombo.FirstOrDefault();
 
@@ -153,12 +151,20 @@ namespace QLKS.ViewModels
                     _db.SaveChanges();
 
                     ListPhong.Remove(item);
-
-                    //_db.Phongs.Remove(SelectedPhong);
-                    //_db.SaveChanges();
-                    //ListPhong.Remove(SelectedPhong);
                 }
             }, p => SelectedPhong != null);
+        }
+
+        private void LoadData()
+        {
+            // Fresh context mỗi lần load — tránh EF cache bảng LoaiPhong cũ
+            using (var freshDb = new HotelManagementEntities())
+            {
+                ListPhong          = new ObservableCollection<Phong>(
+                    freshDb.Phongs.Include("LoaiPhong").ToList());
+                ListLoaiPhongCombo = new ObservableCollection<LoaiPhong>(
+                    freshDb.LoaiPhongs.ToList());
+            }
         }
     }
 }
