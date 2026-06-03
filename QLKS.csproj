@@ -300,6 +300,12 @@
       <DependentUpon>DanhSachKhachHang.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Report\DanhSachPhong_TheoLoai.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DanhSachPhong_TheoLoai.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Report\HoaDonThanhToan.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -362,6 +368,9 @@
     </Compile>
     <Compile Include="Views\ReportKhachHangWindow.xaml.cs">
       <DependentUpon>ReportKhachHangWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportPhongWindow.xaml.cs">
+      <DependentUpon>ReportPhongWindow.xaml</DependentUpon>
     </Compile>
     <!--
     <Compile Include="Views\ReportKhachHangWindow.xaml.cs">
@@ -467,6 +476,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ReportPhongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <!--
     <Page Include="Views\ReportKhachHangWindow.xaml">
       <SubType>Designer</SubType>
@@ -519,6 +532,10 @@
     <EmbeddedResource Include="Report\DanhSachKhachHang.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>DanhSachKhachHang.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\DanhSachPhong_TheoLoai.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>DanhSachPhong_TheoLoai.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\HoaDonThanhToan.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

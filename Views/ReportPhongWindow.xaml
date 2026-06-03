@@ -1,0 +1,17 @@
+﻿<Window x:Class="QLKS.Views.ReportPhongWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer"
+        Title="Báo Cáo Danh Sách Phòng" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="btn_showreport" Content="Xem Báo Cáo" HorizontalAlignment="Left" Margin="10" Width="120" Click="btn_showreport_Click"/>
+
+        <Viewer:CrystalReportsViewer x:Name="report1" Margin="5" Grid.Row="1"/>
+    </Grid>
+</Window>

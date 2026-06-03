@@ -1,4 +1,5 @@
-﻿using QLKS.Report;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using QLKS.Report;
 using System;
 using System.Configuration;
 using System.Windows;
@@ -17,29 +18,15 @@ namespace QLKS.Views
 
         private void btn_showreport_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                // Đọc server và database từ App.config — không hardcode
-                var connStr = ConfigurationManager.ConnectionStrings["HotelManagementDB"]?.ConnectionString
-                              ?? "Data Source=.;Initial Catalog=HotelManagement;Integrated Security=True";
+            ReportDocument rpt = new Report.DanhSachKhachHang();
 
-                var builder  = new System.Data.SqlClient.SqlConnectionStringBuilder(connStr);
-                string server   = builder.DataSource;
-                string database = builder.InitialCatalog;
+            // Dòng đăng nhập của m
+            rpt.SetDatabaseLogon("sa", "123", "TÊN_SERVER", "TÊN_CSDL");
 
-                var rpt = new DanhSachKhachHang();
+            // NÉM THÊM DÒNG NÀY VÀO ĐỂ ÉP NÓ XÓA CACHE CŨ, KÉO DATA MỚI TỪ SQL
+            rpt.Refresh();
 
-                // Integrated Security → truyền empty string cho user/pass
-                // Nếu máy dùng SQL Auth thì đổi lại: rpt.SetDatabaseLogon("sa", "matkhau", server, database)
-                rpt.SetDatabaseLogon("", "", server, database);
-
-                report1.ViewerCore.ReportSource = rpt;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Không thể tải báo cáo:\n" + ex.Message,
-                    "Lỗi Crystal Reports", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            report1.ViewerCore.ReportSource = rpt;
         }
     }
 }

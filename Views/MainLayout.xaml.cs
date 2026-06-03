@@ -25,5 +25,11 @@ namespace QLKS.Views
             ReportKhachHangWindow rptWindow = new ReportKhachHangWindow();
             rptWindow.ShowDialog();
         }
+
+        private void btn_OpenReportPhong_Click(object sender, RoutedEventArgs e)
+        {
+            Views.ReportPhongWindow rp = new Views.ReportPhongWindow();
+            rp.ShowDialog();
+        }
     }
 }
