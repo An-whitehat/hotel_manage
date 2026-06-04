@@ -180,6 +180,11 @@ namespace QLKS.ViewModels
             DeleteDichVuCmd = new RelayCommand(p => {
                 if (MessageBox.Show("Bạn có chắc muốn xóa dịch vụ này?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
+                    if (_db.ChiTietHoaDons.Any(x => x.MaDichVu == SelectedDichVu.MaDichVu))
+                    {
+                        MessageBox.Show("Dịch vụ đang được sử dụng trong hóa đơn!");
+                        return;
+                    }
                     var item = SelectedDichVu;
 
                     _db.DichVus.Remove(item);
